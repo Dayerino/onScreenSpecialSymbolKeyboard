@@ -1,14 +1,16 @@
 #include <windows.h>
+#include <iostream>
 using namespace std;
 LRESULT CALLBACK AnsiWndProc(HWND hWnd,UINT message, WPARAM wParam, LPARAM lParam){
     switch(message){
         case WM_CHAR:
         //wParam is value of the key
         //lParam -(not used here)
-        if(lstrcmpA("Q",(LPCSTR)wParam)){
-
+        //if(lstrcmpA("Q",(LPCSTR)wParam)){ this fucntion compares 2 strings which are passed as the functions params, like strcmp in c
+        if((char)wParam == 'Q' || (char)wParam == 'q'){
+            MessageBoxA(hWnd,"Q was pressed","info",MB_OK);
         }else{
-
+            MessageBoxA(hWnd,"Another button was pressed","info",MB_OK);
         }
         break;
         default:
