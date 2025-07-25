@@ -1,4 +1,5 @@
 #include <windows.h>
+#include <winuser.h>
 #include <iostream>
 using namespace std;
 LRESULT CALLBACK AnsiWndProc(HWND hWnd,UINT message, WPARAM wParam, LPARAM lParam){
@@ -35,15 +36,66 @@ input[3].ki.dwFlags = KEYEVENTF_KEYUP;
 
 // Send all inputs
 SendInput(4, input, sizeof(INPUT));*/
+/*	A-Z 0x41–0x5A
+    0-9 0x30–0x39
+    
+NumPad 0–9	0x60–0x69
+Multiply	0x6A
+Add	0x6B
+Separator	0x6C
+Subtract	0x6D
+Decimal	0x6E
+Divide	0x6F
+
+Left	0x25
+Up	0x26
+Right	0x27
+Down	0x28
+Home	0x24
+End	0x23
+Page Up	0x21
+Page Down	0x22
+Insert	0x2D
+Delete	0x2E
+
+Shift	0x10
+Ctrl	0x11
+Alt (Menu)	0x12
+Caps Lock	0x14
+Tab	0x09
+Enter	0x0D
+Escape	0x1B
+Spacebar	0x20
+
+F1–F12	0x70–0x7B
+F13–F24	0x7C–0x87
+
+Left Button	0x01
+Right Button	0x02
+Middle Button	0x04
+XButton1	0x05
+XButton2	0x06
+full list https://learn.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
+*/
             if(LOWORD(wParam) == 1){
                 INPUT input[2] = {};
                 input[0].type = INPUT_KEYBOARD;
-                input[0].ki.wVk = 'A';
+                input[0].ki.wVk = 0x41;
                 input[0].ki.dwFlags = 0;//key down
                 input[1].type = INPUT_KEYBOARD;
-                input[1].ki.wVk = 'A';
+                input[1].ki.wVk = 0x41;
                 input[1].ki.dwFlags = KEYEVENTF_KEYUP;//key up
                 //ShowWindow(hWnd,SW_MINIMIZE);
+                SendInput(2,input,sizeof(INPUT));
+            }
+            if(LOWORD(wParam) == 2){
+                INPUT input[2] = {};
+                input[0].type = INPUT_KEYBOARD;
+                input[0].ki.wVk = 'Z';
+                input[0].ki.dwFlags = 0;
+                input[1].type = INPUT_KEYBOARD;
+                input[1].ki.wVk = 'Z';
+                input[1].ki.dwFlags = KEYEVENTF_KEYUP;
                 SendInput(2,input,sizeof(INPUT));
             }
         break;
@@ -71,8 +123,8 @@ window.lpszClassName = "testwin";
 RegisterClass(&window);
 int screenWidth = GetSystemMetrics(SM_CXSCREEN);
 int screenHeight = GetSystemMetrics(SM_CYSCREEN);
-int windowWidth = 1024;
-int windowHeight = 768;
+int windowWidth = 960;
+int windowHeight = 270;
 int x = (screenWidth - windowWidth) / 2;
 int y = (screenHeight - windowHeight) / 2;
 HWND hwnd = CreateWindowExA(
@@ -86,17 +138,18 @@ HWND hwnd = CreateWindowExA(
     NULL
 );
 //SetWindowPos(hwnd,HWND_TOPMOST,0,0,0,0,SWP_NOMOVE|SWP_NOSIZE|SWP_SHOWWINDOW);//makes the window always on top
-HWND hButton = CreateWindowA(
+HWND aButton = CreateWindowA(
     "BUTTON",//button class
     "A",//Button label
     WS_CHILD| WS_VISIBLE | BS_PUSHBUTTON,//styles: child of window, visible,pushbutton
     50,50,//x y position inside window
-    40,40,//width & height
+    30,30,//width & height
     hwnd,
     (HMENU)1, //control ID(used later to identify the button)
     window.hInstance,
     NULL
 );
+HWND zButton = CreateWindowA("Button","Z",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 85,50,30,30,hwnd,(HMENU)2,window.hInstance,NULL);
 MSG msg;
 
 ShowWindow(hwnd,SW_SHOW);
