@@ -1,0 +1,1 @@
+HWND F5Button = CreateWindowA("Button","F5",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 230,15,30,30,hwnd,(HMENU)31,window.hInstance,NULL);
