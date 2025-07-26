@@ -1,21 +1,7 @@
 #include <windows.h>
 #include <winuser.h>
 #include <iostream>
-using namespace std;
-LRESULT CALLBACK AnsiWndProc(HWND hWnd,UINT message, WPARAM wParam, LPARAM lParam){
-    switch(message){
-        case WM_CHAR://checks for keyboard button pressed
-        //wParam is value of the key
-        //lParam -(not used here)
-        //if(lstrcmpA("Q",(LPCSTR)wParam)){ this fucntion compares 2 strings which are passed as the functions params, like strcmp in c
-        if((char)wParam == 'Q' || (char)wParam == 'q'){
-            MessageBoxA(hWnd,"Q was pressed","info",MB_OK);
-        }else{
-            MessageBoxA(hWnd,"Another button was pressed","info",MB_OK);
-        }
-        break;
-        case WM_COMMAND://checks for a button click
-        /* this is for later, to write capital letters
+/* this is for later, to write capital letters
         // Press Shift
 input[0].type = INPUT_KEYBOARD;
 input[0].ki.wVk = VK_SHIFT;
@@ -77,27 +63,42 @@ XButton1	0x05
 XButton2	0x06
 full list https://learn.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
 */
-            if(LOWORD(wParam) == 1){
-                INPUT input[2] = {};
-                input[0].type = INPUT_KEYBOARD;
-                input[0].ki.wVk = 0x41;
-                input[0].ki.dwFlags = 0;//key down
-                input[1].type = INPUT_KEYBOARD;
-                input[1].ki.wVk = 0x41;
-                input[1].ki.dwFlags = KEYEVENTF_KEYUP;//key up
-                //ShowWindow(hWnd,SW_MINIMIZE);
-                SendInput(2,input,sizeof(INPUT));
-            }
-            if(LOWORD(wParam) == 2){
-                INPUT input[2] = {};
-                input[0].type = INPUT_KEYBOARD;
-                input[0].ki.wVk = 'Z';
-                input[0].ki.dwFlags = 0;
-                input[1].type = INPUT_KEYBOARD;
-                input[1].ki.wVk = 'Z';
-                input[1].ki.dwFlags = KEYEVENTF_KEYUP;
-                SendInput(2,input,sizeof(INPUT));
-            }
+using namespace std;
+void BTNINPUT(int keyHexVal){
+    INPUT input[2]={};
+    input[0].type = INPUT_KEYBOARD;
+    input[0].ki.wVk = keyHexVal;
+    input[0].ki.dwFlags = 0;
+    input[1].type = INPUT_KEYBOARD;
+    input[1].ki.wVk = keyHexVal;
+    input[1].ki.dwFlags = KEYEVENTF_KEYUP;
+    SendInput(2,input,sizeof(INPUT));
+}
+LRESULT CALLBACK AnsiWndProc(HWND hWnd,UINT message, WPARAM wParam, LPARAM lParam){
+    switch(message){
+        case WM_CHAR://checks for keyboard button pressed
+        //wParam is value of the key
+        //lParam -(not used here)
+        //if(lstrcmpA("Q",(LPCSTR)wParam)){ this fucntion compares 2 strings which are passed as the functions params, like strcmp in c
+        if((char)wParam == 'Q' || (char)wParam == 'q'){
+            MessageBoxA(hWnd,"Q was pressed","info",MB_OK);
+        }else{
+            MessageBoxA(hWnd,"Another button was pressed","info",MB_OK);
+        }
+        break;
+        case WM_COMMAND://checks for a button click
+            if(LOWORD(wParam) == 1){BTNINPUT(0x41);}//a
+            if(LOWORD(wParam) == 2){BTNINPUT(0x5A);}//z
+            if(LOWORD(wParam) == 3){BTNINPUT(0x45);}//e
+            if(LOWORD(wParam) == 4){BTNINPUT(0x52);}//r
+            if(LOWORD(wParam) == 5){BTNINPUT(0x54);}//t
+            if(LOWORD(wParam) == 6){BTNINPUT(0x59);}//y
+            if(LOWORD(wParam) == 7){BTNINPUT(0x55);}//u
+            if(LOWORD(wParam) == 8){BTNINPUT(0x49);}//i
+            if(LOWORD(wParam) == 9){BTNINPUT(0x4F);}//o
+            if(LOWORD(wParam) == 10){BTNINPUT(0x50);}//p
+            if(LOWORD(wParam) == 11){BTNINPUT(0x5A);}//^ must add with the shift key
+            if(LOWORD(wParam) ==12){BTNINPUT(0x5A);}//$ must add with the shift key
         break;
         case WM_DESTROY:
             PostQuitMessage(0);
@@ -140,7 +141,7 @@ HWND hwnd = CreateWindowExA(
 //SetWindowPos(hwnd,HWND_TOPMOST,0,0,0,0,SWP_NOMOVE|SWP_NOSIZE|SWP_SHOWWINDOW);//makes the window always on top
 HWND aButton = CreateWindowA(
     "BUTTON",//button class
-    "A",//Button label
+    "a",//Button label
     WS_CHILD| WS_VISIBLE | BS_PUSHBUTTON,//styles: child of window, visible,pushbutton
     50,50,//x y position inside window
     30,30,//width & height
@@ -149,7 +150,21 @@ HWND aButton = CreateWindowA(
     window.hInstance,
     NULL
 );
-HWND zButton = CreateWindowA("Button","Z",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 85,50,30,30,hwnd,(HMENU)2,window.hInstance,NULL);
+//first row
+//second row
+//third row
+HWND zButton = CreateWindowA("Button","z",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 85,50,30,30,hwnd,(HMENU)2,window.hInstance,NULL);
+HWND eButton = CreateWindowA("Button","e",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,120,50,30,30,hwnd,(HMENU)3,window.hInstance,NULL);
+HWND rButton = CreateWindowA("Button","r",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,155,50,30,30,hwnd,(HMENU)4,window.hInstance,NULL);
+HWND tButton = CreateWindowA("Button","t",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,190,50,30,30,hwnd,(HMENU)5,window.hInstance,NULL);
+HWND yButton = CreateWindowA("Button","y",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,225,50,30,30,hwnd,(HMENU)6,window.hInstance,NULL);
+HWND uButton = CreateWindowA("Button","u",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,260,50,30,30,hwnd,(HMENU)7,window.hInstance,NULL);
+HWND iButton = CreateWindowA("Button","i",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,295,50,30,30,hwnd,(HMENU)8,window.hInstance,NULL);
+HWND oButton = CreateWindowA("Button","o",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,330,50,30,30,hwnd,(HMENU)9,window.hInstance,NULL);
+HWND pButton = CreateWindowA("Button","p",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,365,50,30,30,hwnd,(HMENU)10,window.hInstance,NULL);
+HWND caretButton = CreateWindowA("Button","^",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,400,50,30,30,hwnd,(HMENU)11,window.hInstance,NULL);
+HWND dollarButton = CreateWindowA("Button","$",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,435,50,30,30,hwnd,(HMENU)12,window.hInstance,NULL);
+//fourth row
 MSG msg;
 
 ShowWindow(hwnd,SW_SHOW);
