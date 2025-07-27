@@ -99,6 +99,74 @@ LRESULT CALLBACK AnsiWndProc(HWND hWnd,UINT message, WPARAM wParam, LPARAM lPara
             if(LOWORD(wParam) == 10){BTNINPUT(0x50);}//p
             if(LOWORD(wParam) == 11){BTNINPUT(0x5A);}//^ must add with the shift key
             if(LOWORD(wParam) ==12){BTNINPUT(0x5A);}//$ must add with the shift key
+            if(LOWORD(wParam) ==13){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==14){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==15){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==16){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==17){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==18){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==19){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==20){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==21){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==22){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==23){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==24){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==25){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==26){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==27){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==28){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==29){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==30){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==31){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==32){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==33){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==34){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==35){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==36){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==37){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==38){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==39){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==40){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==41){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==42){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==43){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==44){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==45){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==46){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==47){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==48){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==49){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==50){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==51){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==52){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==53){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==54){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==55){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==56){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==57){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==58){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==59){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==60){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==61){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==62){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==63){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==64){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==65){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==66){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==67){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==68){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==69){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==70){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==71){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==72){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==73){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==74){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==75){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==76){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==77){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==78){BTNINPUT(0x5A);}
+            if(LOWORD(wParam) ==79){BTNINPUT(0x5A);}
+
         break;
         case WM_DESTROY:
             PostQuitMessage(0);
@@ -110,6 +178,7 @@ LRESULT CALLBACK AnsiWndProc(HWND hWnd,UINT message, WPARAM wParam, LPARAM lPara
 
 }
 int main(){
+
 WNDCLASSA window;
 window.style = CS_DBLCLKS | CS_PARENTDC;
 window.lpfnWndProc = (WNDPROC)AnsiWndProc;
@@ -132,12 +201,13 @@ HWND hwnd = CreateWindowExA(
     WS_EX_TOPMOST | WS_EX_NOACTIVATE,
     "testwin",
     "myWindow",
-    WS_OVERLAPPEDWINDOW,
+    WS_OVERLAPPEDWINDOW & ~WS_MAXIMIZEBOX,//disabled maximize & minimize buttons 
     x,y,windowWidth,windowHeight,
     NULL,NULL,
     window.hInstance,
     NULL
 );
+//createwindowA is for normal letters, createWindowW is for special chars
 //first row
 HWND escButton = CreateWindowA("Button","ESC",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 15,15,30,30,hwnd,(HMENU)26,window.hInstance,NULL);
 HWND F1Button = CreateWindowA("Button","F1",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 85,15,30,30,hwnd,(HMENU)27,window.hInstance,NULL);
@@ -153,7 +223,7 @@ HWND F10Button = CreateWindowA("Button","F10",WS_CHILD | WS_VISIBLE | BS_PUSHBUT
 HWND F11Button = CreateWindowA("Button","F11",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 425,15,30,30,hwnd,(HMENU)36,window.hInstance,NULL);
 HWND F12Button = CreateWindowA("Button","F12",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 455,15,30,30,hwnd,(HMENU)37,window.hInstance,NULL);
 //second row
-HWND tildeButton = CreateWindowA("Button","²",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 15,50,30,30,hwnd,(HMENU)38,window.hInstance,NULL);
+HWND tildeButton = CreateWindowW(L"Button",L"²",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 15,50,30,30,hwnd,(HMENU)38,window.hInstance,NULL);
 HWND oneButton = CreateWindowA("Button","1",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 50,50,30,30,hwnd,(HMENU)39,window.hInstance,NULL);
 HWND twoButton = CreateWindowA("Button","2",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 85,50,30,30,hwnd,(HMENU)40,window.hInstance,NULL);
 HWND threeButton = CreateWindowA("Button","3",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 120,50,30,30,hwnd,(HMENU)41,window.hInstance,NULL);
@@ -164,8 +234,9 @@ HWND sevenButton = CreateWindowA("Button","7",WS_CHILD | WS_VISIBLE | BS_PUSHBUT
 HWND eightButton = CreateWindowA("Button","8",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 295,50,30,30,hwnd,(HMENU)46,window.hInstance,NULL);
 HWND nineButton = CreateWindowA("Button","9",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 330,50,30,30,hwnd,(HMENU)47,window.hInstance,NULL);
 HWND zeroButton = CreateWindowA("Button","0",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 365,50,30,30,hwnd,(HMENU)48,window.hInstance,NULL);
-HWND smalloButton = CreateWindowA("Button","°",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 400,50,30,30,hwnd,(HMENU)49,window.hInstance,NULL);
+HWND smalloButton = CreateWindowW(L"Button",L"°",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 400,50,30,30,hwnd,(HMENU)49,window.hInstance,NULL);
 HWND equalsButton = CreateWindowA("Button","=",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 435,50,30,30,hwnd,(HMENU)50,window.hInstance,NULL);
+HWND backspaceButton = CreateWindowA("Button","backspace",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 470,50,90,30,hwnd,(HMENU)50,window.hInstance,NULL);
 //third row
 HWND tabButton=CreateWindowA("Button","Tab",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 15,85,30,30,hwnd,(HMENU)25,window.hInstance,NULL);
 HWND aButton = CreateWindowA(
@@ -188,8 +259,8 @@ HWND uButton = CreateWindowA("Button","u",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,260,
 HWND iButton = CreateWindowA("Button","i",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,295,85,30,30,hwnd,(HMENU)8,window.hInstance,NULL);
 HWND oButton = CreateWindowA("Button","o",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,330,85,30,30,hwnd,(HMENU)9,window.hInstance,NULL);
 HWND pButton = CreateWindowA("Button","p",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,365,85,30,30,hwnd,(HMENU)10,window.hInstance,NULL);
-HWND caretButton = CreateWindowA("Button","^",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,400,85,30,30,hwnd,(HMENU)11,window.hInstance,NULL);
-HWND dollarButton = CreateWindowA("Button","$",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,435,85,30,30,hwnd,(HMENU)12,window.hInstance,NULL);
+HWND caretButton = CreateWindowW(L"Button",L"^",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,400,85,30,30,hwnd,(HMENU)11,window.hInstance,NULL);
+HWND dollarButton = CreateWindowW(L"Button",L"$",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,435,85,30,30,hwnd,(HMENU)12,window.hInstance,NULL);
 //fourth row
 HWND CapsButton = CreateWindowA("Button","CAPS",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 15,120,40,30,hwnd,(HMENU)51,window.hInstance,NULL);
 HWND qButton = CreateWindowA("Button","q",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,55,120,30,30,hwnd,(HMENU)13,window.hInstance,NULL);
@@ -202,7 +273,7 @@ HWND jButton = CreateWindowA("Button","j",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,265,
 HWND kButton = CreateWindowA("Button","k",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,300,120,30,30,hwnd,(HMENU)20,window.hInstance,NULL);
 HWND lButton = CreateWindowA("Button","l",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,335,120,30,30,hwnd,(HMENU)21,window.hInstance,NULL);
 HWND mButton = CreateWindowA("Button","m",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,370,120,30,30,hwnd,(HMENU)22,window.hInstance,NULL);
-HWND ùButton = CreateWindowA("Button","ù",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,405,120,30,30,hwnd,(HMENU)23,window.hInstance,NULL);//fix this 
+HWND ùButton = CreateWindowW(L"Button",L"ù",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,405,120,30,30,hwnd,(HMENU)23,window.hInstance,NULL); 
 HWND starButton = CreateWindowA("Button","*",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,440,120,30,30,hwnd,(HMENU)24,window.hInstance,NULL);
 //fifth row
 HWND shiftButton = CreateWindowA("Button","Shift",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 15,155,30,30,hwnd,(HMENU)52,window.hInstance,NULL);
@@ -216,7 +287,7 @@ HWND nButton = CreateWindowA("Button","n",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
 HWND commaButton = CreateWindowA("Button",",",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 295,155,30,30,hwnd,(HMENU)60,window.hInstance,NULL);
 HWND semicolonButton = CreateWindowA("Button",";",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 330,155,30,30,hwnd,(HMENU)61,window.hInstance,NULL);
 HWND colonButton = CreateWindowA("Button",":",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 365,155,30,30,hwnd,(HMENU)62,window.hInstance,NULL);
-HWND exclamationButton = CreateWindowA("Button","!",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 400,155,30,30,hwnd,(HMENU)63,window.hInstance,NULL);
+HWND exclamationButton = CreateWindowW(L"Button",L"!",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 400,155,30,30,hwnd,(HMENU)63,window.hInstance,NULL);
 HWND RshiftButton = CreateWindowA("Button","Shift",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 435,155,70,30,hwnd,(HMENU)64,window.hInstance,NULL);
 //sixth row
 HWND CtrlButton = CreateWindowA("Button","Ctrl",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 15,190,45,30,hwnd,(HMENU)65,window.hInstance,NULL);
@@ -226,8 +297,20 @@ HWND SpaceButton = CreateWindowA("Button","Space",WS_CHILD | WS_VISIBLE | BS_PUS
 HWND RightAltButton = CreateWindowA("Button","R Alt",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 335,190,45,30,hwnd,(HMENU)69,window.hInstance,NULL);
 HWND Windows2Button = CreateWindowA("Button","Win",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 380,190,30,30,hwnd,(HMENU)70,window.hInstance,NULL);
 HWND Ctrl2Button = CreateWindowA("Button","Ctrl",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 410,190,45,30,hwnd,(HMENU)71,window.hInstance,NULL);
+//arrows keys
+//HWND upButton = CreateWindowA("Button","\xE2\x86\x91",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 540,155,40,30,hwnd,(HMENU)72,window.hInstance,NULL);
+HWND upButton = CreateWindowW(L"Button",L"↑",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,540,155,40,30,hwnd,(HMENU)72,window.hInstance,NULL);
+HWND leftButton = CreateWindowW(L"Button",L"←",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 505,190,40,30,hwnd,(HMENU)73,window.hInstance,NULL);
+HWND downButton = CreateWindowW(L"Button",L"↓",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 540,190,40,30,hwnd,(HMENU)74,window.hInstance,NULL);
+HWND rightButton = CreateWindowW(L"Button",L"→",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 580,190,40,30,hwnd,(HMENU)75,window.hInstance,NULL);
+//special buttons
+/*delete, enter(return) fin?, pageup/down, numpad to switch between numbers & special chars(i guess shift btn can do that)*/
+HWND EnterButton = CreateWindowA("Button","Enter",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 470,80,90,70,hwnd,(HMENU)76,window.hInstance,NULL);
+HWND DeleteButton = CreateWindowA("Button","Del",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 455,190,45,30,hwnd,(HMENU)77,window.hInstance,NULL);
+HWND PageupButton = CreateWindowA("Button","PgUp",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 560,85,60,30,hwnd,(HMENU)78,window.hInstance,NULL);
+HWND PageDownButton = CreateWindowA("Button","PgDown",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 560,120,60,30,hwnd,(HMENU)79,window.hInstance,NULL);
+//we moving onto adding functionality to the buttons
 MSG msg;
-
 ShowWindow(hwnd,SW_SHOW);
 UpdateWindow(hwnd);
 while(GetMessage(&msg,NULL,0,0)){
