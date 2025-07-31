@@ -164,11 +164,11 @@ LRESULT CALLBACK AnsiWndProc(HWND hWnd,UINT message, WPARAM wParam, LPARAM lPara
             if(LOWORD(wParam) ==66){BTNINPUT(0xA1);}//right shift
 
             if(LOWORD(wParam) ==67){BTNINPUT(0xA2);}//ctrl
-            if(LOWORD(wParam) ==68){BTNINPUT(0x5A);}//win
+            if(LOWORD(wParam) ==68){BTNINPUT(0x5A);}//win // wrong
             if(LOWORD(wParam) ==69){BTNINPUT(0xA4);}//alt
             if(LOWORD(wParam) ==70){BTNINPUT(0x20);}//space
             if(LOWORD(wParam) ==71){BTNINPUT(0xA5);}//RAlt
-            if(LOWORD(wParam) ==72){BTNINPUT(0x5A);}//WIN2
+            if(LOWORD(wParam) ==72){BTNINPUT(0x5A);}//WIN2 // wrong
             if(LOWORD(wParam) ==73){BTNINPUT(0xA3);}//CTRL2
 
             if(LOWORD(wParam) ==74){BTNINPUT(0x26);}//uparrow
@@ -288,7 +288,7 @@ HWND kButton = CreateWindowA("Button","k",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,300,
 HWND lButton = CreateWindowA("Button","l",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,335,120,30,30,hwnd,(HMENU)21,window.hInstance,NULL);
 HWND mButton = CreateWindowA("Button","m",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,370,120,30,30,hwnd,(HMENU)22,window.hInstance,NULL);
 HWND ùButton = CreateWindowW(L"Button",L"ù",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,405,120,30,30,hwnd,(HMENU)23,window.hInstance,NULL); 
-HWND starButton = CreateWindowA("Button","*",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,440,120,30,30,hwnd,(HMENU)24,window.hInstance,NULL);
+HWND starButton = CreateWindowA("Button","*",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,435,120,30,30,hwnd,(HMENU)24,window.hInstance,NULL);
 //fifth row
 HWND shiftButton = CreateWindowA("Button","Shift",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 15,155,30,30,hwnd,(HMENU)54,window.hInstance,NULL);
 HWND compareButton = CreateWindowA("Button","<",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 50,155,30,30,hwnd,(HMENU)55,window.hInstance,NULL);
@@ -323,6 +323,35 @@ HWND EnterButton = CreateWindowA("Button","Enter",WS_CHILD | WS_VISIBLE | BS_PUS
 HWND DeleteButton = CreateWindowA("Button","Del",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 455,190,45,30,hwnd,(HMENU)79,window.hInstance,NULL);
 HWND PageupButton = CreateWindowA("Button","PgUp",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 560,85,60,30,hwnd,(HMENU)80,window.hInstance,NULL);
 HWND PageDownButton = CreateWindowA("Button","PgDown",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 560,120,60,30,hwnd,(HMENU)81,window.hInstance,NULL);
+//adding buttons to special keys instead of using shift cuz im lazy and i'd rather get it done than not
+//first row
+HWND ampersandButton = CreateWindowA("Button","&&",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,625,15,30,30,hwnd,(HMENU)82,window.hInstance,NULL);
+HWND accentButton = CreateWindowW(L"Button",L"é",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,660,15,30,30,hwnd,(HMENU)83,window.hInstance,NULL);
+HWND doubleQuoteButton = CreateWindowA("Button","\"",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,695,15,30,30,hwnd,(HMENU)84,window.hInstance,NULL);
+HWND singleQuoteButton = CreateWindowA("Button","\'",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,730,15,30,30,hwnd,(HMENU)85,window.hInstance,NULL);
+HWND openingParenthesisButton = CreateWindowA("Button","(",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,765,15,30,30,hwnd,(HMENU)86,window.hInstance,NULL);
+HWND hyphonButton = CreateWindowA("Button","-",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,800,15,30,30,hwnd,(HMENU)87,window.hInstance,NULL);
+//second row
+HWND otheraccentButton = CreateWindowW(L"Button",L"è",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,625,50,30,30,hwnd,(HMENU)88,window.hInstance,NULL);
+HWND underScoreButton = CreateWindowA("Button","_",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,660,50,30,30,hwnd,(HMENU)89,window.hInstance,NULL);
+HWND çButton = CreateWindowW(L"Button",L"ç",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,695,50,30,30,hwnd,(HMENU)90,window.hInstance,NULL);
+HWND àButton = CreateWindowW(L"Button",L"à",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,730,50,30,30,hwnd,(HMENU)91,window.hInstance,NULL);
+HWND closingParenthesisButton = CreateWindowA("Button",")",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,765,50,30,30,hwnd,(HMENU)92,window.hInstance,NULL);
+HWND plusButton = CreateWindowA("Button","+",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,800,50,30,30,hwnd,(HMENU)93,window.hInstance,NULL);
+//third row
+HWND actualtildeButton = CreateWindowA("Button","~",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,625,85,30,30,hwnd,(HMENU)94,window.hInstance,NULL);
+HWND hashTagButton = CreateWindowA("Button","#",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,660,85,30,30,hwnd,(HMENU)95,window.hInstance,NULL);
+HWND openingbracesButton = CreateWindowA("Button","{",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,695,85,30,30,hwnd,(HMENU)96,window.hInstance,NULL);
+HWND openingbracketButton = CreateWindowA("Button","[",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,730,85,30,30,hwnd,(HMENU)97,window.hInstance,NULL);
+HWND orButton = CreateWindowA("Button","|",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,765,85,30,30,hwnd,(HMENU)98,window.hInstance,NULL);
+HWND backTickButton = CreateWindowA("Button","`",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,800,85,30,30,hwnd,(HMENU)99,window.hInstance,NULL);
+//fourth row
+HWND backSlashButton = CreateWindowA("Button","\\",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,625,120,30,30,hwnd,(HMENU)100,window.hInstance,NULL);
+HWND forwardSlashButton = CreateWindowA("Button","/",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,660,120,30,30,hwnd,(HMENU)101,window.hInstance,NULL);
+HWND closingBraceButton = CreateWindowA("Button","}",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,695,120,30,30,hwnd,(HMENU)102,window.hInstance,NULL);
+HWND closingBracketButton = CreateWindowA("Button","]",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,730,120,30,30,hwnd,(HMENU)103,window.hInstance,NULL);
+HWND carettButton = CreateWindowA("Button","^",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,765,120,30,30,hwnd,(HMENU)104,window.hInstance,NULL);
+HWND atButton = CreateWindowA("Button","@",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,800,120,30,30,hwnd,(HMENU)105,window.hInstance,NULL);
 //we moving onto adding functionality to the buttons
 MSG msg;
 ShowWindow(hwnd,SW_SHOW);
