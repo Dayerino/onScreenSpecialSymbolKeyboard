@@ -1,69 +1,12 @@
 #include <windows.h>
 #include <winuser.h>
+#include <tchar.h>
 #include <iostream>
-/* this is for later, to write capital letters
-        // Press Shift
-input[0].type = INPUT_KEYBOARD;
-input[0].ki.wVk = VK_SHIFT;
-
-// Press A
-input[1].type = INPUT_KEYBOARD;
-input[1].ki.wVk = 'A';
-
-// Release A
-input[2].type = INPUT_KEYBOARD;
-input[2].ki.wVk = 'A';
-input[2].ki.dwFlags = KEYEVENTF_KEYUP;
-
-// Release Shift
-input[3].type = INPUT_KEYBOARD;
-input[3].ki.wVk = VK_SHIFT;
-input[3].ki.dwFlags = KEYEVENTF_KEYUP;
-
-// Send all inputs
-SendInput(4, input, sizeof(INPUT));*/
-/*	A-Z 0x41–0x5A
-    0-9 0x30–0x39
-    
-NumPad 0–9	0x60–0x69
-Multiply	0x6A
-Add	0x6B
-Separator	0x6C
-Subtract	0x6D
-Decimal	0x6E
-Divide	0x6F
-
-Left	0x25
-Up	0x26
-Right	0x27
-Down	0x28
-Home	0x24
-End	0x23
-Page Up	0x21
-Page Down	0x22
-Insert	0x2D
-Delete	0x2E
-
-Shift	0x10
-Ctrl	0x11
-Alt (Menu)	0x12
-Caps Lock	0x14
-Tab	0x09
-Enter	0x0D
-Escape	0x1B
-Spacebar	0x20
-
-F1–F12	0x70–0x7B
-F13–F24	0x7C–0x87
-
-Left Button	0x01
-Right Button	0x02
-Middle Button	0x04
-XButton1	0x05
-XButton2	0x06
+/*
 full list https://learn.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
 */
 using namespace std;
+//main function used to send key inputs using their virtual key codes
 void BTNINPUT(int keyHexVal){
     INPUT input[2]={};
     input[0].type = INPUT_KEYBOARD;
@@ -74,18 +17,20 @@ void BTNINPUT(int keyHexVal){
     input[1].ki.dwFlags = KEYEVENTF_KEYUP;
     SendInput(2,input,sizeof(INPUT));
 }
-LRESULT CALLBACK AnsiWndProc(HWND hWnd,UINT message, WPARAM wParam, LPARAM lParam){
+//main function used to send key inputs using their unicode
+void unicodeInput(int keyHexVal){
+    INPUT ip  = {};
+    ip.type = INPUT_KEYBOARD;//specifies that the input is a keyboard event
+                ip.ki.wScan = keyHexVal;//sets the unicode character to send
+                ip.ki.wVk = 0;//sets virtual key code to 0, this is required because we're sending a character
+                ip.ki.dwFlags = KEYEVENTF_UNICODE;//tells windows we're sending a unicode char not a normal key,
+                //                                (unicode is just a software level symbol(text output) while a key is a hardware-ish event(button up/down))
+                ip.ki.time = 0;
+                ip.ki.dwExtraInfo = GetMessageExtraInfo();
+                SendInput(1,&ip,sizeof(INPUT));
+}
+LRESULT CALLBACK WndProc(HWND hWnd,UINT message, WPARAM wParam, LPARAM lParam){
     switch(message){
-        case WM_CHAR://checks for keyboard button pressed
-        //wParam is value of the key
-        //lParam -(not used here)
-        //if(lstrcmpA("Q",(LPCSTR)wParam)){ this fucntion compares 2 strings which are passed as the functions params, like strcmp in c
-        if((char)wParam == 'Q' || (char)wParam == 'q'){
-            MessageBoxA(hWnd,"Q was pressed","info",MB_OK);
-        }else{
-            MessageBoxA(hWnd,"Another button was pressed","info",MB_OK);
-        }
-        break;
         case WM_COMMAND://checks for a button click
             if(LOWORD(wParam) == 1){BTNINPUT(0x1B);}//esc
             if(LOWORD(wParam) == 2){BTNINPUT(0x70);}//f1
@@ -100,408 +45,51 @@ LRESULT CALLBACK AnsiWndProc(HWND hWnd,UINT message, WPARAM wParam, LPARAM lPara
             if(LOWORD(wParam) == 11){BTNINPUT(0x79);}//f10
             if(LOWORD(wParam) == 12){BTNINPUT(0x7A);}//f11
             if(LOWORD(wParam) == 13){BTNINPUT(0x7B);}//f12
-            if(LOWORD(wParam) == 14){
-                INPUT ip = {};//initializes an input struct
-                ip.type = INPUT_KEYBOARD;//specifies that the input is a keyboard event
-                ip.ki.wScan = 0x00B2;//sets the unicode character to send
-                ip.ki.wVk = 0;//sets virtual key code to 0, this is required because we're sending a character
-                ip.ki.dwFlags = KEYEVENTF_UNICODE;//tells windows we're sending a unicode char not a normal key,
-                //                                (unicode is just a software level symbol(text output) while a key is a hardware-ish event(button up/down))
-                ip.ki.time = 0;
-                ip.ki.dwExtraInfo = GetMessageExtraInfo();
-                SendInput(1,&ip,sizeof(INPUT));//sends input, 1 is the number of events being sent, &ip is a pointer to the input structure
-                //                             sizeof(input) tells windows how big the structure is
-            }//²
-            if(LOWORD(wParam) == 15){
-                INPUT ip = {};
-                ip.type = INPUT_KEYBOARD;
-                ip.ki.wScan = 0x00B0;
-                ip.ki.wVk = 0;
-                ip.ki.dwFlags = KEYEVENTF_UNICODE;
-                ip.ki.time = 0;
-                ip.ki.dwExtraInfo = GetMessageExtraInfo();
-                SendInput(1,&ip,sizeof(INPUT));
-            }//°
+            if(LOWORD(wParam) == 14){unicodeInput(0x00B2);}//²
+            if(LOWORD(wParam) == 15){unicodeInput(0x00B0);}//°
             if(LOWORD(wParam) == 16){
                 keybd_event(VK_OEM_PLUS,0,0,0);
                 keybd_event(VK_OEM_PLUS,0,KEYEVENTF_KEYUP,0);
             }//=
             if(LOWORD(wParam) == 17){BTNINPUT(0x08);}//backspace
             if(LOWORD(wParam) == 18){BTNINPUT(0x09);}//tab
-            if(LOWORD(wParam) == 19){
-                INPUT ip = {};
-                ip.type = INPUT_KEYBOARD;
-                ip.ki.wScan = 0x00A3;
-                ip.ki.wVk = 0;
-                ip.ki.dwFlags = KEYEVENTF_UNICODE;
-                ip.ki.time = 0;
-                ip.ki.dwExtraInfo = GetMessageExtraInfo();
-                SendInput(1,&ip,sizeof(INPUT));
-            }//£
-            /*
-$    0x0024
-^    0x005E
-ù    0x00F9
-*    0x002A
-&    0x0026
-<    0x003C
->    0x003E
-,    0x002C
-;    0x003B
-:    0x003A
-!    0x0021
-é    0x00E9
-"    0x0022
-'    0x0027
-(    0x0028
-è    0x00E8
-_    0x005F
-ç    0x00E7
-à    0x00E0
-)    0x0029
-+    0x002B
-~    0x007E
-#    0x0023
-{    0x007B
-[    0x005B
-|    0x007C
-`    0x0060
-\    0x005C  ← backslash
-/    0x002F  ← forward slash
-}    0x007D
-]    0x005D
-@    0x0040*/
-            if(LOWORD(wParam) == 20){
-                INPUT ip = {};
-                ip.type = INPUT_KEYBOARD;
-                ip.ki.wScan = 0x0024;
-                ip.ki.wVk = 0;
-                ip.ki.dwFlags = KEYEVENTF_UNICODE;
-                ip.ki.time = 0;
-                ip.ki.dwExtraInfo = GetMessageExtraInfo();
-                SendInput(1,&ip,sizeof(INPUT));
-            }//$
-            if(LOWORD(wParam) == 21){INPUT ip = {};
-                ip.type = INPUT_KEYBOARD;
-                ip.ki.wScan = 0x005E;
-                ip.ki.wVk = 0;
-                ip.ki.dwFlags = KEYEVENTF_UNICODE;
-                ip.ki.time = 0;
-                ip.ki.dwExtraInfo = GetMessageExtraInfo();
-                SendInput(1,&ip,sizeof(INPUT));
-            }//^
-            if(LOWORD(wParam) == 22){
-                INPUT ip = {};
-                ip.type = INPUT_KEYBOARD;
-                ip.ki.wScan = 0x00F9;
-                ip.ki.wVk = 0;
-                ip.ki.dwFlags = KEYEVENTF_UNICODE;
-                ip.ki.time = 0;
-                ip.ki.dwExtraInfo = GetMessageExtraInfo();
-                SendInput(1,&ip,sizeof(INPUT));
-            }//ù
-            if(LOWORD(wParam) == 23){
-                INPUT ip = {};
-                ip.type = INPUT_KEYBOARD;
-                ip.ki.wScan = 0x002A;
-                ip.ki.wVk = 0;
-                ip.ki.dwFlags = KEYEVENTF_UNICODE;
-                ip.ki.time = 0;
-                ip.ki.dwExtraInfo = GetMessageExtraInfo();
-                SendInput(1,&ip,sizeof(INPUT));
-            }//*
-            if(LOWORD(wParam) == 24){
-                INPUT ip = {};
-                ip.type = INPUT_KEYBOARD;
-                ip.ki.wScan = 0x0026;
-                ip.ki.wVk = 0;
-                ip.ki.dwFlags = KEYEVENTF_UNICODE;
-                ip.ki.time = 0;
-                ip.ki.dwExtraInfo = GetMessageExtraInfo();
-                SendInput(1,&ip,sizeof(INPUT));
-            }//&
+            if(LOWORD(wParam) == 19){unicodeInput(0x00A3);}//£
+            
+            if(LOWORD(wParam) == 20){unicodeInput(0x0024);}//$
+            if(LOWORD(wParam) == 21){unicodeInput(0x005E);}//^
+            if(LOWORD(wParam) == 22){unicodeInput(0x00F9);}//ù
+            if(LOWORD(wParam) == 23){unicodeInput(0x002A);}//*
+            if(LOWORD(wParam) == 24){unicodeInput(0x0026);}//&
             if(LOWORD(wParam) == 25){BTNINPUT(0xA0);}//leftshift
-            if(LOWORD(wParam) == 26){
-                INPUT ip = {};
-                ip.type = INPUT_KEYBOARD;
-                ip.ki.wScan = 0x003C;
-                ip.ki.wVk = 0;
-                ip.ki.dwFlags = KEYEVENTF_UNICODE;
-                ip.ki.time = 0;
-                ip.ki.dwExtraInfo = GetMessageExtraInfo();
-                SendInput(1,&ip,sizeof(INPUT));
-            }//< DONT FORGET TO ADD >
-            if(LOWORD(wParam) == 27){
-                INPUT ip = {};
-                ip.type = INPUT_KEYBOARD;
-                ip.ki.wScan = 0x002C;
-                ip.ki.wVk = 0;
-                ip.ki.dwFlags = KEYEVENTF_UNICODE;
-                ip.ki.time = 0;
-                ip.ki.dwExtraInfo = GetMessageExtraInfo();
-                SendInput(1,&ip,sizeof(INPUT));
-            }//,
-            if(LOWORD(wParam) == 28){
-                INPUT ip = {};
-                ip.type = INPUT_KEYBOARD;
-                ip.ki.wScan = 0x003B;
-                ip.ki.wVk = 0;
-                ip.ki.dwFlags = KEYEVENTF_UNICODE;
-                ip.ki.time = 0;
-                ip.ki.dwExtraInfo = GetMessageExtraInfo();
-                SendInput(1,&ip,sizeof(INPUT));
-            }//;
-            if(LOWORD(wParam) == 29){
-                INPUT ip = {};
-                ip.type = INPUT_KEYBOARD;
-                ip.ki.wScan = 0x003A;
-                ip.ki.wVk = 0;
-                ip.ki.dwFlags = KEYEVENTF_UNICODE;
-                ip.ki.time = 0;
-                ip.ki.dwExtraInfo = GetMessageExtraInfo();
-                SendInput(1,&ip,sizeof(INPUT));
-            }//:
-            if(LOWORD(wParam) == 30){
-                INPUT ip = {};
-                ip.type = INPUT_KEYBOARD;
-                ip.ki.wScan = 0x0021;
-                ip.ki.wVk = 0;
-                ip.ki.dwFlags = KEYEVENTF_UNICODE;
-                ip.ki.time = 0;
-                ip.ki.dwExtraInfo = GetMessageExtraInfo();
-                SendInput(1,&ip,sizeof(INPUT));
-            }//!
-            if(LOWORD(wParam) == 31){
-                INPUT ip = {};
-                ip.type = INPUT_KEYBOARD;
-                ip.ki.wScan = 0x00E9;
-                ip.ki.wVk = 0;
-                ip.ki.dwFlags = KEYEVENTF_UNICODE;
-                ip.ki.time = 0;
-                ip.ki.dwExtraInfo = GetMessageExtraInfo();
-                SendInput(1,&ip,sizeof(INPUT));
-            }//é
+            if(LOWORD(wParam) == 26){unicodeInput(0x003C);}//< DONT FORGET TO ADD >
+            if(LOWORD(wParam) == 27){unicodeInput(0x002C);}//,
+            if(LOWORD(wParam) == 28){unicodeInput(0x003B);}//;
+            if(LOWORD(wParam) == 29){unicodeInput(0x003A);}//:
+            if(LOWORD(wParam) == 30){unicodeInput(0x0021);}//!
+            if(LOWORD(wParam) == 31){unicodeInput(0x00E9);}//é
             if(LOWORD(wParam) == 32){BTNINPUT(0xA1);}//rshift
-            if(LOWORD(wParam) == 33){
-                INPUT ip = {};
-                ip.type = INPUT_KEYBOARD;
-                ip.ki.wScan = 0x0022;
-                ip.ki.wVk = 0;
-                ip.ki.dwFlags = KEYEVENTF_UNICODE;
-                ip.ki.time = 0;
-                ip.ki.dwExtraInfo = GetMessageExtraInfo();
-                SendInput(1,&ip,sizeof(INPUT));
-            }//""
-            if(LOWORD(wParam) == 34){
-                INPUT ip = {};
-                ip.type = INPUT_KEYBOARD;
-                ip.ki.wScan = 0x0027;
-                ip.ki.wVk = 0;
-                ip.ki.dwFlags = KEYEVENTF_UNICODE;
-                ip.ki.time = 0;
-                ip.ki.dwExtraInfo = GetMessageExtraInfo();
-                SendInput(1,&ip,sizeof(INPUT));
-            }//'
-            if(LOWORD(wParam) == 35){
-                INPUT ip = {};
-                ip.type = INPUT_KEYBOARD;
-                ip.ki.wScan = 0x0028;
-                ip.ki.wVk = 0;
-                ip.ki.dwFlags = KEYEVENTF_UNICODE;
-                ip.ki.time = 0;
-                ip.ki.dwExtraInfo = GetMessageExtraInfo();
-                SendInput(1,&ip,sizeof(INPUT));
-            }//(
-            if(LOWORD(wParam) == 36){
-                INPUT ip = {};
-                ip.type = INPUT_KEYBOARD;
-                ip.ki.wScan = 0x002D;
-                ip.ki.wVk = 0;
-                ip.ki.dwFlags = KEYEVENTF_UNICODE;
-                ip.ki.time = 0;
-                ip.ki.dwExtraInfo = GetMessageExtraInfo();
-                SendInput(1,&ip,sizeof(INPUT));
-            }//-
-            if(LOWORD(wParam) == 37){
-                INPUT ip = {};
-                ip.type = INPUT_KEYBOARD;
-                ip.ki.wScan = 0x00E8;
-                ip.ki.wVk = 0;
-                ip.ki.dwFlags = KEYEVENTF_UNICODE;
-                ip.ki.time = 0;
-                ip.ki.dwExtraInfo = GetMessageExtraInfo();
-                SendInput(1,&ip,sizeof(INPUT));
-            }//è
-            if(LOWORD(wParam) == 38){
-                INPUT ip = {};
-                ip.type = INPUT_KEYBOARD;
-                ip.ki.wScan = 0x005F;
-                ip.ki.wVk = 0;
-                ip.ki.dwFlags = KEYEVENTF_UNICODE;
-                ip.ki.time = 0;
-                ip.ki.dwExtraInfo = GetMessageExtraInfo();
-                SendInput(1,&ip,sizeof(INPUT));
-            }//_
-            if(LOWORD(wParam) == 39){
-                INPUT ip = {};
-                ip.type = INPUT_KEYBOARD;
-                ip.ki.wScan = 0x00E7;
-                ip.ki.wVk = 0;
-                ip.ki.dwFlags = KEYEVENTF_UNICODE;
-                ip.ki.time = 0;
-                ip.ki.dwExtraInfo = GetMessageExtraInfo();
-                SendInput(1,&ip,sizeof(INPUT));
-            }//ç
-            if(LOWORD(wParam) == 40){
-                INPUT ip = {};
-                ip.type = INPUT_KEYBOARD;
-                ip.ki.wScan = 0x00E0;
-                ip.ki.wVk = 0;
-                ip.ki.dwFlags = KEYEVENTF_UNICODE;
-                ip.ki.time = 0;
-                ip.ki.dwExtraInfo = GetMessageExtraInfo();
-                SendInput(1,&ip,sizeof(INPUT));
-            }//à
-            if(LOWORD(wParam) == 41){
-                INPUT ip = {};
-                ip.type = INPUT_KEYBOARD;
-                ip.ki.wScan = 0x0029;
-                ip.ki.wVk = 0;
-                ip.ki.dwFlags = KEYEVENTF_UNICODE;
-                ip.ki.time = 0;
-                ip.ki.dwExtraInfo = GetMessageExtraInfo();
-                SendInput(1,&ip,sizeof(INPUT));
-            }//)
-            if(LOWORD(wParam) == 42){
-                INPUT ip = {};
-                ip.type = INPUT_KEYBOARD;
-                ip.ki.wScan = 0x002B;
-                ip.ki.wVk = 0;
-                ip.ki.dwFlags = KEYEVENTF_UNICODE;
-                ip.ki.time = 0;
-                ip.ki.dwExtraInfo = GetMessageExtraInfo();
-                SendInput(1,&ip,sizeof(INPUT));
-            }//+
-            if(LOWORD(wParam) == 43){
-                INPUT ip = {};
-                ip.type = INPUT_KEYBOARD;
-                ip.ki.wScan = 0x007E;
-                ip.ki.wVk = 0;
-                ip.ki.dwFlags = KEYEVENTF_UNICODE;
-                ip.ki.time = 0;
-                ip.ki.dwExtraInfo = GetMessageExtraInfo();
-                SendInput(1,&ip,sizeof(INPUT));
-            }//~
-            if(LOWORD(wParam) == 44){
-                INPUT ip = {};
-                ip.type = INPUT_KEYBOARD;
-                ip.ki.wScan = 0x0023;
-                ip.ki.wVk = 0;
-                ip.ki.dwFlags = KEYEVENTF_UNICODE;
-                ip.ki.time = 0;
-                ip.ki.dwExtraInfo = GetMessageExtraInfo();
-                SendInput(1,&ip,sizeof(INPUT));
-            }//#
-            if(LOWORD(wParam) == 45){
-                INPUT ip = {};
-                ip.type = INPUT_KEYBOARD;
-                ip.ki.wScan = 0x007B;
-                ip.ki.wVk = 0;
-                ip.ki.dwFlags = KEYEVENTF_UNICODE;
-                ip.ki.time = 0;
-                ip.ki.dwExtraInfo = GetMessageExtraInfo();
-                SendInput(1,&ip,sizeof(INPUT));
-            }//{
-            if(LOWORD(wParam) == 46){
-                INPUT ip = {};
-                ip.type = INPUT_KEYBOARD;
-                ip.ki.wScan = 0x005B;
-                ip.ki.wVk = 0;
-                ip.ki.dwFlags = KEYEVENTF_UNICODE;
-                ip.ki.time = 0;
-                ip.ki.dwExtraInfo = GetMessageExtraInfo();
-                SendInput(1,&ip,sizeof(INPUT));
-            }//[
-            if(LOWORD(wParam) == 47){
-                INPUT ip = {};
-                ip.type = INPUT_KEYBOARD;
-                ip.ki.wScan = 0x007C;
-                ip.ki.wVk = 0;
-                ip.ki.dwFlags = KEYEVENTF_UNICODE;
-                ip.ki.time = 0;
-                ip.ki.dwExtraInfo = GetMessageExtraInfo();
-                SendInput(1,&ip,sizeof(INPUT));
-            }//|
-            if(LOWORD(wParam) == 48){
-                INPUT ip = {};
-                ip.type = INPUT_KEYBOARD;
-                ip.ki.wScan = 0x0060;
-                ip.ki.wVk = 0;
-                ip.ki.dwFlags = KEYEVENTF_UNICODE;
-                ip.ki.time = 0;
-                ip.ki.dwExtraInfo = GetMessageExtraInfo();
-                SendInput(1,&ip,sizeof(INPUT));
-            }//`
-            if(LOWORD(wParam) == 49){
-                INPUT ip = {};
-                ip.type = INPUT_KEYBOARD;
-                ip.ki.wScan = 0x005C;
-                ip.ki.wVk = 0;
-                ip.ki.dwFlags = KEYEVENTF_UNICODE;
-                ip.ki.time = 0;
-                ip.ki.dwExtraInfo = GetMessageExtraInfo();
-                SendInput(1,&ip,sizeof(INPUT));
-            }//backslash
-            if(LOWORD(wParam) == 50){
-                INPUT ip = {};
-                ip.type = INPUT_KEYBOARD;
-                ip.ki.wScan = 0x002F;
-                ip.ki.wVk = 0;
-                ip.ki.dwFlags = KEYEVENTF_UNICODE;
-                ip.ki.time = 0;
-                ip.ki.dwExtraInfo = GetMessageExtraInfo();
-                SendInput(1,&ip,sizeof(INPUT));
-            }//forwardslash
-            if(LOWORD(wParam) == 51){
-                INPUT ip = {};
-                ip.type = INPUT_KEYBOARD;
-                ip.ki.wScan = 0x007D;
-                ip.ki.wVk = 0;
-                ip.ki.dwFlags = KEYEVENTF_UNICODE;
-                ip.ki.time = 0;
-                ip.ki.dwExtraInfo = GetMessageExtraInfo();
-                SendInput(1,&ip,sizeof(INPUT));
-            }//}
-            if(LOWORD(wParam) == 52){
-                INPUT ip = {};
-                ip.type = INPUT_KEYBOARD;
-                ip.ki.wScan = 0x005D;
-                ip.ki.wVk = 0;
-                ip.ki.dwFlags = KEYEVENTF_UNICODE;
-                ip.ki.time = 0;
-                ip.ki.dwExtraInfo = GetMessageExtraInfo();
-                SendInput(1,&ip,sizeof(INPUT));
-            }//]
-            if(LOWORD(wParam) == 53){
-                INPUT ip = {};
-                ip.type = INPUT_KEYBOARD;
-                ip.ki.wScan = 0x003E;
-                ip.ki.wVk = 0;
-                ip.ki.dwFlags = KEYEVENTF_UNICODE;
-                ip.ki.time = 0;
-                ip.ki.dwExtraInfo = GetMessageExtraInfo();
-                SendInput(1,&ip,sizeof(INPUT));
-            }//>
-            if(LOWORD(wParam) == 54){
-                INPUT ip = {};
-                ip.type = INPUT_KEYBOARD;
-                ip.ki.wScan = 0x0040;
-                ip.ki.wVk = 0;
-                ip.ki.dwFlags = KEYEVENTF_UNICODE;
-                ip.ki.time = 0;
-                ip.ki.dwExtraInfo = GetMessageExtraInfo();
-                SendInput(1,&ip,sizeof(INPUT));
-            }//@
+            if(LOWORD(wParam) == 33){unicodeInput(0x0022);}//""
+            if(LOWORD(wParam) == 34){unicodeInput(0x0027);}//'
+            if(LOWORD(wParam) == 35){unicodeInput(0x0028);}//(
+            if(LOWORD(wParam) == 36){unicodeInput(0x002D);}//-
+            if(LOWORD(wParam) == 37){unicodeInput(0x00E8);}//è
+            if(LOWORD(wParam) == 38){unicodeInput(0x005F);}//_
+            if(LOWORD(wParam) == 39){unicodeInput(0x00E7);}//ç
+            if(LOWORD(wParam) == 40){unicodeInput(0x00E0);}//à
+            if(LOWORD(wParam) == 41){unicodeInput(0x0029);}//)
+            if(LOWORD(wParam) == 42){unicodeInput(0x002B);}//+
+            if(LOWORD(wParam) == 43){unicodeInput(0x007E);}//~
+            if(LOWORD(wParam) == 44){unicodeInput(0x0023);}//#
+            if(LOWORD(wParam) == 45){unicodeInput(0x007B);}//{
+            if(LOWORD(wParam) == 46){unicodeInput(0x005B);}//[
+            if(LOWORD(wParam) == 47){unicodeInput(0x007C);}//|
+            if(LOWORD(wParam) == 48){unicodeInput(0x0060);}//`
+            if(LOWORD(wParam) == 49){unicodeInput(0x005C);}//backslash
+            if(LOWORD(wParam) == 50){unicodeInput(0x002F);}//forwardslash
+            if(LOWORD(wParam) == 51){unicodeInput(0x007D);}//}
+            if(LOWORD(wParam) == 52){unicodeInput(0x005D);}//]
+            if(LOWORD(wParam) == 53){unicodeInput(0x003E);}//>
+            if(LOWORD(wParam) == 54){unicodeInput(0x0040);}//@
             if(LOWORD(wParam) == 55){BTNINPUT(0xA2);}//ctrl
             if(LOWORD(wParam) == 56){BTNINPUT(0x5B);}//windows
             if(LOWORD(wParam) == 57){BTNINPUT(0xA4);}//alt
@@ -531,17 +119,17 @@ _    0x005F
 }
 int main(){
 
-WNDCLASSA window;
+WNDCLASS window= {};
 window.style = CS_DBLCLKS | CS_PARENTDC;
-window.lpfnWndProc = (WNDPROC)AnsiWndProc;
+window.lpfnWndProc = WndProc;
 window.cbClsExtra = 0;
 window.cbWndExtra = 0;
 window.hInstance = GetModuleHandle(NULL);
 window.hIcon = NULL;
-window.hCursor = LoadCursor(NULL, (LPSTR)IDC_IBEAM);
+window.hCursor = LoadCursor(NULL,IDC_IBEAM);
 window.hbrBackground = NULL;
 window.lpszMenuName= NULL;
-window.lpszClassName = "testwin";
+window.lpszClassName = TEXT("MainWindow");
 RegisterClass(&window);
 int screenWidth = GetSystemMetrics(SM_CXSCREEN);
 int screenHeight = GetSystemMetrics(SM_CYSCREEN);
@@ -549,10 +137,11 @@ int windowWidth = 960;
 int windowHeight = 270;
 int x = (screenWidth - windowWidth) / 2;
 int y = (screenHeight - windowHeight) / 2;
-HWND hwnd = CreateWindowExA(
+HWND hwnd = CreateWindowEx(
     WS_EX_TOPMOST | WS_EX_NOACTIVATE,
-    "testwin",
-    "myWindow",
+    TEXT("mainWindow"),
+    TEXT(
+    "MainWindow"),
     WS_OVERLAPPEDWINDOW & ~WS_MAXIMIZEBOX,//disabled maximize & minimize buttons 
     x,y,windowWidth,windowHeight,
     NULL,NULL,
