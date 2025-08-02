@@ -1,1 +1,0 @@
-BTNINPUT(0x31);

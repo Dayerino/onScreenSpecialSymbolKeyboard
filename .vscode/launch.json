@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/you12/OneDrive/Bureau/C++/onscreenkeyboard",
-      "program": "c:/Users/you12/OneDrive/Bureau/C++/onscreenkeyboard/build/Debug/outDebug",
+      "cwd": "c:/Users/you12/OneDrive/Bureau/C++/onscreenkeyboard/Special Symbols Keyboard",
+      "program": "c:/Users/you12/OneDrive/Bureau/C++/onscreenkeyboard/Special Symbols Keyboard/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
