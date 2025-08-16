@@ -130,19 +130,20 @@ window.hCursor = LoadCursor(NULL,IDC_IBEAM);
 window.hbrBackground = NULL;
 window.lpszMenuName= NULL;
 window.lpszClassName = TEXT("MainWindow");
+window.hbrBackground = (HBRUSH)(COLOR_WINDOW +1);
 RegisterClass(&window);
 int screenWidth = GetSystemMetrics(SM_CXSCREEN);
 int screenHeight = GetSystemMetrics(SM_CYSCREEN);
-int windowWidth = 960;
-int windowHeight = 270;
+int windowWidth = screenWidth * 0.34;
+int windowHeight = screenHeight * 0.25;
 int x = (screenWidth - windowWidth) / 2;
 int y = (screenHeight - windowHeight) / 2;
 HWND hwnd = CreateWindowEx(
-    WS_EX_TOPMOST | WS_EX_NOACTIVATE,
+    WS_EX_TOPMOST | WS_EX_APPWINDOW,
     TEXT("mainWindow"),
     TEXT(
-    "MainWindow"),
-    WS_OVERLAPPEDWINDOW & ~WS_MAXIMIZEBOX,//disabled maximize & minimize buttons 
+    "Specials Keyboard"),
+    WS_OVERLAPPEDWINDOW & ~WS_MAXIMIZEBOX & ~WS_SIZEBOX | WS_MINIMIZEBOX,//disabled maximize & minimize buttons 
     x,y,windowWidth,windowHeight,
     NULL,NULL,
     window.hInstance,
@@ -160,6 +161,8 @@ HWND hwnd = CreateWindowEx(
 NULL
 );*/
 //createwindowA is for normal letters, createWindowW is for special chars
+/*need to set up button sizes to match different resolutions*/
+int btnxPos, btnyPos,btnW,btnH;
 //first row
 HWND escButton = CreateWindowA("Button","ESC",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 15,15,30,30,hwnd,(HMENU)1,window.hInstance,NULL);
 HWND F1Button = CreateWindowA("Button","F1",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 85,15,30,30,hwnd,(HMENU)2,window.hInstance,NULL);
