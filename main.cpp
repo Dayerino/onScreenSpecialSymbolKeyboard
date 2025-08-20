@@ -6,6 +6,10 @@
 full list https://learn.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
 */
 using namespace std;
+int incrementspace(int oldpos, int byhowmuch){
+    int newpos = oldpos + byhowmuch;
+    return newpos;
+}
 //main function used to send key inputs using their virtual key codes
 void BTNINPUT(int keyHexVal){
     INPUT input[2]={};
@@ -165,20 +169,37 @@ NULL
 int btnxPos, btnyPos,btnW,btnH;
 btnW = windowWidth * 0.05;
 btnH = windowHeight * 0.11; 
+int firstRowbtnXPos, firstRowbtnYPos;
+firstRowbtnXPos = windowWidth * 0.02;
+firstRowbtnYPos = windowHeight *0.06;
+int spacecalc = windowWidth * 0.05;
+int f1spacecalc = windowWidth * 0.10;
 //first row
-HWND escButton = CreateWindowA("Button","ESC",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 15,15,btnW,btnH,hwnd,(HMENU)1,window.hInstance,NULL);
-HWND F1Button = CreateWindowA("Button","F1",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 85,15,btnW,btnH,hwnd,(HMENU)2,window.hInstance,NULL);
-HWND F2Button = CreateWindowA("Button","F2",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 115,15,btnW,btnH,hwnd,(HMENU)3,window.hInstance,NULL);
-HWND F3Button = CreateWindowA("Button","F3",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 145,15,btnW,btnH,hwnd,(HMENU)4,window.hInstance,NULL);
-HWND F4Button = CreateWindowA("Button","F4",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 175,15,btnW,btnH,hwnd,(HMENU)5,window.hInstance,NULL);
-HWND F5Button = CreateWindowA("Button","F5",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 225,15,btnW,btnH,hwnd,(HMENU)6,window.hInstance,NULL);
-HWND F6Button = CreateWindowA("Button","F6",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 255,15,btnW,btnH,hwnd,(HMENU)7,window.hInstance,NULL);
-HWND F7Button = CreateWindowA("Button","F7",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 285,15,btnW,btnH,hwnd,(HMENU)8,window.hInstance,NULL);
-HWND F8Button = CreateWindowA("Button","F8",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 315,15,btnW,btnH,hwnd,(HMENU)9,window.hInstance,NULL);
-HWND F9Button = CreateWindowA("Button","F9",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 365,15,btnW,btnH,hwnd,(HMENU)10,window.hInstance,NULL);
-HWND F10Button = CreateWindowA("Button","F10",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 395,15,btnW,btnH,hwnd,(HMENU)11,window.hInstance,NULL);
-HWND F11Button = CreateWindowA("Button","F11",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 425,15,btnW,btnH,hwnd,(HMENU)12,window.hInstance,NULL);
-HWND F12Button = CreateWindowA("Button","F12",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 455,15,btnW,btnH,hwnd,(HMENU)13,window.hInstance,NULL);
+HWND escButton = CreateWindowA("Button","ESC",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, firstRowbtnXPos,firstRowbtnYPos,btnW,btnH,hwnd,(HMENU)1,window.hInstance,NULL);
+firstRowbtnXPos = firstRowbtnXPos + f1spacecalc;
+HWND F1Button = CreateWindowA("Button","F1",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, firstRowbtnXPos,firstRowbtnYPos,btnW,btnH,hwnd,(HMENU)2,window.hInstance,NULL);
+firstRowbtnXPos = incrementspace(firstRowbtnXPos, spacecalc);
+HWND F2Button = CreateWindowA("Button","F2",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, firstRowbtnXPos,firstRowbtnYPos,btnW,btnH,hwnd,(HMENU)3,window.hInstance,NULL);
+firstRowbtnXPos = incrementspace(firstRowbtnXPos, spacecalc);
+HWND F3Button = CreateWindowA("Button","F3",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, firstRowbtnXPos,firstRowbtnYPos,btnW,btnH,hwnd,(HMENU)4,window.hInstance,NULL);
+firstRowbtnXPos = incrementspace(firstRowbtnXPos, spacecalc);
+HWND F4Button = CreateWindowA("Button","F4",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, firstRowbtnXPos,firstRowbtnYPos,btnW,btnH,hwnd,(HMENU)5,window.hInstance,NULL);
+firstRowbtnXPos = incrementspace(firstRowbtnXPos, f1spacecalc);
+HWND F5Button = CreateWindowA("Button","F5",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, firstRowbtnXPos,firstRowbtnYPos,btnW,btnH,hwnd,(HMENU)6,window.hInstance,NULL);
+firstRowbtnXPos = incrementspace(firstRowbtnXPos, spacecalc);
+HWND F6Button = CreateWindowA("Button","F6",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, firstRowbtnXPos,firstRowbtnYPos,btnW,btnH,hwnd,(HMENU)7,window.hInstance,NULL);
+firstRowbtnXPos = incrementspace(firstRowbtnXPos, spacecalc);
+HWND F7Button = CreateWindowA("Button","F7",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, firstRowbtnXPos,firstRowbtnYPos,btnW,btnH,hwnd,(HMENU)8,window.hInstance,NULL);
+firstRowbtnXPos = incrementspace(firstRowbtnXPos, spacecalc);
+HWND F8Button = CreateWindowA("Button","F8",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, firstRowbtnXPos,firstRowbtnYPos,btnW,btnH,hwnd,(HMENU)9,window.hInstance,NULL);
+firstRowbtnXPos = incrementspace(firstRowbtnXPos, f1spacecalc);
+HWND F9Button = CreateWindowA("Button","F9",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, firstRowbtnXPos,firstRowbtnYPos,btnW,btnH,hwnd,(HMENU)10,window.hInstance,NULL);
+firstRowbtnXPos = incrementspace(firstRowbtnXPos, spacecalc);
+HWND F10Button = CreateWindowA("Button","F10",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, firstRowbtnXPos,firstRowbtnYPos,btnW,btnH,hwnd,(HMENU)11,window.hInstance,NULL);
+firstRowbtnXPos = incrementspace(firstRowbtnXPos, spacecalc);
+HWND F11Button = CreateWindowA("Button","F11",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, firstRowbtnXPos,firstRowbtnYPos,btnW,btnH,hwnd,(HMENU)12,window.hInstance,NULL);
+firstRowbtnXPos = incrementspace(firstRowbtnXPos, spacecalc);
+HWND F12Button = CreateWindowA("Button","F12",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, firstRowbtnXPos,firstRowbtnYPos,btnW,btnH,hwnd,(HMENU)13,window.hInstance,NULL);
 //second row
 HWND subscript2Button = CreateWindowW(L"Button",L"²",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 15,50,btnW,btnH,hwnd,(HMENU)14,window.hInstance,NULL);
 HWND smalloButton = CreateWindowW(L"Button",L"°",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 400,50,btnW,btnH,hwnd,(HMENU)15,window.hInstance,NULL);
