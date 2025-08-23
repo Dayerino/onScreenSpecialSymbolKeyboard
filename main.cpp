@@ -147,7 +147,7 @@ HWND hwnd = CreateWindowEx(
     TEXT("mainWindow"),
     TEXT(
     "Specials Keyboard"),
-    WS_OVERLAPPEDWINDOW & ~WS_MAXIMIZEBOX & ~WS_SIZEBOX | WS_MINIMIZEBOX,//disabled maximize & minimize buttons 
+    WS_OVERLAPPEDWINDOW & ~WS_MAXIMIZEBOX| WS_MINIMIZEBOX,//disabled maximize & minimize buttons 
     x,y,windowWidth,windowHeight,
     NULL,NULL,
     window.hInstance,
@@ -303,13 +303,25 @@ fifthrowXPos = incrementspace(fifthrowXPos,secondrowspacecalc);
 HWND atButton = CreateWindowA("Button","@",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,fifthrowXPos,fifthrowYPos,btnW,btnH,hwnd,(HMENU)54,window.hInstance,NULL);
 fifthrowXPos = incrementspace(fifthrowXPos,secondrowspacecalc);
 //sixth
-HWND CtrlButton = CreateWindowA("Button","Ctrl",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 15,190,45,30,hwnd,(HMENU)55,window.hInstance,NULL);
-HWND WindowsButton = CreateWindowA("Button","Win",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 55,190,btnW,btnH,hwnd,(HMENU)56,window.hInstance,NULL);
-HWND AltButton = CreateWindowA("Button","Alt",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 85,190,btnW,btnH,hwnd,(HMENU)57,window.hInstance,NULL);
-HWND SpaceButton = CreateWindowA("Button","Space",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 120,190,210,30,hwnd,(HMENU)58,window.hInstance,NULL);
-HWND RightAltButton = CreateWindowA("Button","R Alt",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 335,190,45,30,hwnd,(HMENU)59,window.hInstance,NULL);
-HWND Windows2Button = CreateWindowA("Button","Win",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 380,190,btnW,btnH,hwnd,(HMENU)60,window.hInstance,NULL);
-HWND RCtrlButton = CreateWindowA("Button","RCtrl",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 410,190,45,30,hwnd,(HMENU)61,window.hInstance,NULL);
+int sixthrowXPos, sixthrowYPos;
+sixthrowXPos = windowWidth * 0.02;
+sixthrowYPos = windowHeight * 0.66;
+int ctrlbtnW = windowWidth *0.05;
+int ctrlspace = windowWidth *0.1;
+HWND CtrlButton = CreateWindowA("Button","Ctrl",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, sixthrowXPos,sixthrowYPos,ctrlbtnW,btnH,hwnd,(HMENU)55,window.hInstance,NULL);
+sixthrowXPos = incrementspace(sixthrowXPos,secondrowspacecalc);
+HWND WindowsButton = CreateWindowA("Button","Win",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,sixthrowXPos,sixthrowYPos,btnW,btnH,hwnd,(HMENU)56,window.hInstance,NULL);
+sixthrowXPos = incrementspace(sixthrowXPos,secondrowspacecalc);
+HWND AltButton = CreateWindowA("Button","Alt",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, sixthrowXPos,sixthrowYPos,btnW,btnH,hwnd,(HMENU)57,window.hInstance,NULL);
+int spacebtnW = windowWidth * 0.25;
+HWND SpaceButton = CreateWindowA("Button","Space",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,sixthrowXPos,sixthrowYPos,spacebtnW,btnH,hwnd,(HMENU)58,window.hInstance,NULL);
+sixthrowXPos = incrementspace(sixthrowXPos,spacebtnW);
+HWND RightAltButton = CreateWindowA("Button","RAlt",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, sixthrowXPos,sixthrowYPos,btnW,btnH,hwnd,(HMENU)59,window.hInstance,NULL);
+sixthrowXPos = incrementspace(sixthrowXPos,secondrowspacecalc);
+HWND Windows2Button = CreateWindowA("Button","Win",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,sixthrowXPos,sixthrowYPos,btnW,btnH,hwnd,(HMENU)60,window.hInstance,NULL);
+sixthrowXPos = incrementspace(sixthrowXPos,secondrowspacecalc);
+HWND RCtrlButton = CreateWindowA("Button","RCtrl",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, sixthrowXPos,sixthrowYPos,ctrlbtnW,btnH,hwnd,(HMENU)61,window.hInstance,NULL);
+//page up & down btns could go next to backspace, add delete to sixth row
 //arrows keys
 HWND upButton = CreateWindowW(L"Button",L"↑",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,540,155,40,30,hwnd,(HMENU)62,window.hInstance,NULL);
 HWND leftButton = CreateWindowW(L"Button",L"←",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 505,190,40,30,hwnd,(HMENU)63,window.hInstance,NULL);
