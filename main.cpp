@@ -147,7 +147,7 @@ HWND hwnd = CreateWindowEx(
     TEXT("mainWindow"),
     TEXT(
     "Specials Keyboard"),
-    WS_OVERLAPPEDWINDOW & ~WS_MAXIMIZEBOX| WS_MINIMIZEBOX,//disabled maximize & minimize buttons 
+    WS_OVERLAPPEDWINDOW & ~WS_MAXIMIZEBOX & ~WS_SIZEBOX| WS_MINIMIZEBOX,//disabled maximize & minimize buttons 
     x,y,windowWidth,windowHeight,
     NULL,NULL,
     window.hInstance,
@@ -215,6 +215,15 @@ secondRowbtnXPos = incrementspace(secondRowbtnXPos,secondrowspacecalc);
 int backspacebtnW;
 backspacebtnW = windowWidth * 0.15;
 HWND backspaceButton = CreateWindowA("Button","backspace",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, secondRowbtnXPos,secondRowbtnYPos,backspacebtnW,btnH,hwnd,(HMENU)17,window.hInstance,NULL);
+for(int i = 0;i<=2;i++){
+secondRowbtnXPos = incrementspace(secondRowbtnXPos,secondrowspacecalc);
+}
+int pgupanddown = windowWidth *0.1;
+HWND PageupButton = CreateWindowA("Button","PgUp",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, secondRowbtnXPos,secondRowbtnYPos,pgupanddown,btnH,hwnd,(HMENU)68,window.hInstance,NULL);
+for(int i = 0;i<2;i++){
+secondRowbtnXPos = incrementspace(secondRowbtnXPos,secondrowspacecalc);
+}
+HWND PageDownButton = CreateWindowA("Button","PgDown",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, secondRowbtnXPos,secondRowbtnYPos,pgupanddown,btnH,hwnd,(HMENU)69,window.hInstance,NULL);
 //third row
 int thirdrowXPos,thirdrowYPos;
 thirdrowYPos = windowHeight *0.3;
@@ -321,17 +330,28 @@ sixthrowXPos = incrementspace(sixthrowXPos,secondrowspacecalc);
 HWND Windows2Button = CreateWindowA("Button","Win",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,sixthrowXPos,sixthrowYPos,btnW,btnH,hwnd,(HMENU)60,window.hInstance,NULL);
 sixthrowXPos = incrementspace(sixthrowXPos,secondrowspacecalc);
 HWND RCtrlButton = CreateWindowA("Button","RCtrl",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, sixthrowXPos,sixthrowYPos,ctrlbtnW,btnH,hwnd,(HMENU)61,window.hInstance,NULL);
+sixthrowXPos = incrementspace(sixthrowXPos,secondrowspacecalc);
+HWND DeleteButton = CreateWindowA("Button","Del",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, sixthrowXPos,sixthrowYPos,btnW,btnH,hwnd,(HMENU)67,window.hInstance,NULL);
 //page up & down btns could go next to backspace, add delete to sixth row
 //arrows keys
-HWND upButton = CreateWindowW(L"Button",L"↑",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,540,155,40,30,hwnd,(HMENU)62,window.hInstance,NULL);
-HWND leftButton = CreateWindowW(L"Button",L"←",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 505,190,40,30,hwnd,(HMENU)63,window.hInstance,NULL);
-HWND downButton = CreateWindowW(L"Button",L"↓",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 540,190,40,30,hwnd,(HMENU)64,window.hInstance,NULL);
-HWND rightButton = CreateWindowW(L"Button",L"→",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 580,190,40,30,hwnd,(HMENU)65,window.hInstance,NULL);
+for(int i = 0;i<3;i++){
+    sixthrowXPos = incrementspace(sixthrowXPos,secondrowspacecalc);
+}
+HWND leftButton = CreateWindowW(L"Button",L"←",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, sixthrowXPos,sixthrowYPos,btnW,btnH,hwnd,(HMENU)63,window.hInstance,NULL);
+sixthrowXPos = incrementspace(sixthrowXPos,secondrowspacecalc);
+HWND downButton = CreateWindowW(L"Button",L"↓",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, sixthrowXPos,sixthrowYPos,btnW,btnH,hwnd,(HMENU)64,window.hInstance,NULL);
+fifthrowXPos = incrementspace(fifthrowXPos,secondrowspacecalc);
+HWND upButton = CreateWindowW(L"Button",L"↑",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,sixthrowXPos,fifthrowYPos,btnW,btnH,hwnd,(HMENU)62,window.hInstance,NULL);
+sixthrowXPos = incrementspace(sixthrowXPos,secondrowspacecalc);
+HWND rightButton = CreateWindowW(L"Button",L"→",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, sixthrowXPos,sixthrowYPos,btnW,btnH,hwnd,(HMENU)65,window.hInstance,NULL);
 /*delete, enter(return) fin?, pageup/down, numpad to switch between numbers & special chars(i guess shift btn can do that)*/
-HWND EnterButton = CreateWindowA("Button","Enter",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 470,80,90,70,hwnd,(HMENU)66,window.hInstance,NULL);
-HWND DeleteButton = CreateWindowA("Button","Del",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 455,190,45,30,hwnd,(HMENU)67,window.hInstance,NULL);
-HWND PageupButton = CreateWindowA("Button","PgUp",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 560,85,60,30,hwnd,(HMENU)68,window.hInstance,NULL);
-HWND PageDownButton = CreateWindowA("Button","PgDown",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 560,120,60,30,hwnd,(HMENU)69,window.hInstance,NULL);
+int returnkeyW,returnkeyH;
+returnkeyW = windowWidth * 0.1;
+returnkeyH = windowHeight *0.23;
+thirdrowXPos = incrementspace(thirdrowXPos,secondrowspacecalc);
+HWND EnterButton = CreateWindowA("Button","Enter",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, thirdrowXPos,thirdrowYPos,returnkeyW,returnkeyH,hwnd,(HMENU)66,window.hInstance,NULL);
+/*HWND PageupButton = CreateWindowA("Button","PgUp",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 560,85,60,30,hwnd,(HMENU)68,window.hInstance,NULL);
+HWND PageDownButton = CreateWindowA("Button","PgDown",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 560,120,60,30,hwnd,(HMENU)69,window.hInstance,NULL);*/
 MSG msg;
 ShowWindow(hwnd,SW_SHOW);
 UpdateWindow(hwnd);
