@@ -34,6 +34,111 @@ void unicodeInput(int keyHexVal){
                 ip.ki.dwExtraInfo = GetMessageExtraInfo();
                 SendInput(1,&ip,sizeof(INPUT));
 }
+
+int screenWidth = GetSystemMetrics(SM_CXSCREEN);
+int screenHeight = GetSystemMetrics(SM_CYSCREEN);
+int windowWidth = screenWidth * 0.34;
+int windowHeight = screenHeight * 0.25;
+int x = (screenWidth - windowWidth) / 2;
+int y = (screenHeight - windowHeight) / 2;
+int btnxPos, btnyPos;
+int btnW = windowWidth * 0.05;
+int btnH = windowHeight * 0.11; 
+int firstRowbtnXPos = windowWidth * 0.02;
+int firstRowbtnYPos = windowHeight *0.06;
+int spacecalc = windowWidth * 0.05;
+int f1spacecalc = windowWidth * 0.10;
+//font size changes might be necessary for lower resolutions, but that's for later
+//first row
+vector<HWND>buttonsVector;//vector for all normal sized buttons
+HWND escButton;
+HWND F1Button;
+HWND F2Button;
+HWND F3Button;
+HWND F4Button;
+HWND F5Button;
+HWND F6Button;
+HWND F7Button;
+HWND F8Button;
+HWND F9Button;
+HWND F10Button;
+HWND F11Button;
+HWND F12Button;
+//second row
+
+HWND subscript2Button;
+HWND smalloButton;
+HWND equalsButton;
+vector<HWND>BSpaceVec;
+HWND backspaceButton;
+vector<HWND>pageVec;                         
+HWND PageupButton;
+HWND PageDownButton;
+//third row
+
+HWND tabButton;
+HWND poundButton;
+HWND dollarButton;
+HWND caretButton;
+HWND ùButton; 
+HWND starButton;
+HWND ampersandButton;
+HWND smallerthanButton;
+HWND biggerthanButton;
+HWND semicolonButton;
+HWND colonButton;
+HWND exclamationButton;
+HWND accentButton;
+//fourth row
+
+vector<HWND>shiftVec;                       
+HWND LshiftButton;
+HWND doubleQuoteButton;
+HWND singleQuoteButton;
+HWND openingParenthesisButton;
+HWND closingParenthesisButton;
+HWND otheraccentButton;
+HWND underScoreButton;
+HWND çButton;
+HWND àButton;
+HWND hyphonButton;
+HWND RshiftButton;
+//fifth
+
+HWND plusButton;
+HWND tildeButton;
+HWND hashTagButton;
+HWND openingbracesButton;
+HWND closingBraceButton;
+HWND orButton;
+HWND backTickButton;
+HWND backSlashButton;
+HWND forwardSlashButton;
+HWND openingbracketButton;
+HWND closingBracketButton;
+HWND commaButton;
+HWND atButton;
+//sixth
+
+vector<HWND>ctrlVec;                    
+HWND CtrlButton;
+HWND WindowsButton;
+HWND AltButton;
+vector<HWND>spaceVec;           
+HWND SpaceButton;
+HWND RightAltButton;
+HWND Windows2Button;
+HWND RCtrlButton;
+HWND DeleteButton;
+//arrows keys
+
+HWND leftButton;
+HWND downButton;
+HWND upButton;
+HWND rightButton;
+vector<HWND>EnterbtnVec;    
+//return             
+HWND EnterButton;
 LRESULT CALLBACK WndProc(HWND hWnd,UINT message, WPARAM wParam, LPARAM lParam){
     switch(message){
         case WM_COMMAND://checks for a button click
@@ -127,8 +232,7 @@ LRESULT CALLBACK WndProc(HWND hWnd,UINT message, WPARAM wParam, LPARAM lParam){
 
 }
 int main(){
-
-WNDCLASS window= {};
+    WNDCLASS window= {};
 window.style = CS_DBLCLKS | CS_PARENTDC;
 window.lpfnWndProc = WndProc;
 window.cbClsExtra = 0;
@@ -141,12 +245,6 @@ window.lpszMenuName= NULL;
 window.lpszClassName = TEXT("MainWindow");
 window.hbrBackground = (HBRUSH)(COLOR_WINDOW +1);
 RegisterClass(&window);
-int screenWidth = GetSystemMetrics(SM_CXSCREEN);
-int screenHeight = GetSystemMetrics(SM_CYSCREEN);
-int windowWidth = screenWidth * 0.34;
-int windowHeight = screenHeight * 0.25;
-int x = (screenWidth - windowWidth) / 2;
-int y = (screenHeight - windowHeight) / 2;
 HWND hwnd = CreateWindowEx(
     WS_EX_TOPMOST | WS_EX_APPWINDOW,
     TEXT("mainWindow"),
@@ -158,44 +256,32 @@ HWND hwnd = CreateWindowEx(
     window.hInstance,
     NULL
 );
-int btnxPos, btnyPos,btnW,btnH;
-btnW = windowWidth * 0.05;
-btnH = windowHeight * 0.11; 
-int firstRowbtnXPos, firstRowbtnYPos;
-firstRowbtnXPos = windowWidth * 0.02;
-firstRowbtnYPos = windowHeight *0.06;
-int spacecalc = windowWidth * 0.05;
-int f1spacecalc = windowWidth * 0.10;
-//font size changes might be necessary for lower resolutions, but that's for later
-//first row
-vector<HWND>buttonsVector;
-vector<HWND>specialBtnsVector;//a vector for all normal buttons and multiple vectors for different sized buttons
-HWND escButton = CreateWindowA("Button","ESC",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, firstRowbtnXPos,firstRowbtnYPos,btnW,btnH,hwnd,(HMENU)1,window.hInstance,NULL);
+escButton = CreateWindowA("Button","ESC",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, firstRowbtnXPos,firstRowbtnYPos,btnW,btnH,hwnd,(HMENU)1,window.hInstance,NULL);
 buttonsVector.push_back(escButton);
-firstRowbtnXPos = firstRowbtnXPos + f1spacecalc;
-HWND F1Button = CreateWindowA("Button","F1",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, firstRowbtnXPos,firstRowbtnYPos,btnW,btnH,hwnd,(HMENU)2,window.hInstance,NULL);
-firstRowbtnXPos = incrementspace(firstRowbtnXPos, spacecalc);
-HWND F2Button = CreateWindowA("Button","F2",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, firstRowbtnXPos,firstRowbtnYPos,btnW,btnH,hwnd,(HMENU)3,window.hInstance,NULL);
-firstRowbtnXPos = incrementspace(firstRowbtnXPos, spacecalc);
-HWND F3Button = CreateWindowA("Button","F3",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, firstRowbtnXPos,firstRowbtnYPos,btnW,btnH,hwnd,(HMENU)4,window.hInstance,NULL);
-firstRowbtnXPos = incrementspace(firstRowbtnXPos, spacecalc);
-HWND F4Button = CreateWindowA("Button","F4",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, firstRowbtnXPos,firstRowbtnYPos,btnW,btnH,hwnd,(HMENU)5,window.hInstance,NULL);
-firstRowbtnXPos = incrementspace(firstRowbtnXPos, f1spacecalc);
-HWND F5Button = CreateWindowA("Button","F5",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, firstRowbtnXPos,firstRowbtnYPos,btnW,btnH,hwnd,(HMENU)6,window.hInstance,NULL);
-firstRowbtnXPos = incrementspace(firstRowbtnXPos, spacecalc);
-HWND F6Button = CreateWindowA("Button","F6",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, firstRowbtnXPos,firstRowbtnYPos,btnW,btnH,hwnd,(HMENU)7,window.hInstance,NULL);
-firstRowbtnXPos = incrementspace(firstRowbtnXPos, spacecalc);
-HWND F7Button = CreateWindowA("Button","F7",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, firstRowbtnXPos,firstRowbtnYPos,btnW,btnH,hwnd,(HMENU)8,window.hInstance,NULL);
-firstRowbtnXPos = incrementspace(firstRowbtnXPos, spacecalc);
-HWND F8Button = CreateWindowA("Button","F8",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, firstRowbtnXPos,firstRowbtnYPos,btnW,btnH,hwnd,(HMENU)9,window.hInstance,NULL);
-firstRowbtnXPos = incrementspace(firstRowbtnXPos, f1spacecalc);
-HWND F9Button = CreateWindowA("Button","F9",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, firstRowbtnXPos,firstRowbtnYPos,btnW,btnH,hwnd,(HMENU)10,window.hInstance,NULL);
-firstRowbtnXPos = incrementspace(firstRowbtnXPos, spacecalc);
-HWND F10Button = CreateWindowA("Button","F10",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, firstRowbtnXPos,firstRowbtnYPos,btnW,btnH,hwnd,(HMENU)11,window.hInstance,NULL);
-firstRowbtnXPos = incrementspace(firstRowbtnXPos, spacecalc);
-HWND F11Button = CreateWindowA("Button","F11",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, firstRowbtnXPos,firstRowbtnYPos,btnW,btnH,hwnd,(HMENU)12,window.hInstance,NULL);
-firstRowbtnXPos = incrementspace(firstRowbtnXPos, spacecalc);
-HWND F12Button = CreateWindowA("Button","F12",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, firstRowbtnXPos,firstRowbtnYPos,btnW,btnH,hwnd,(HMENU)13,window.hInstance,NULL);
+    firstRowbtnXPos = firstRowbtnXPos + f1spacecalc;
+F1Button = CreateWindowA("Button","F1",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, firstRowbtnXPos,firstRowbtnYPos,btnW,btnH,hwnd,(HMENU)2,window.hInstance,NULL);
+    firstRowbtnXPos = incrementspace(firstRowbtnXPos, spacecalc);
+    F2Button = CreateWindowA("Button","F2",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, firstRowbtnXPos,firstRowbtnYPos,btnW,btnH,hwnd,(HMENU)3,window.hInstance,NULL);
+    firstRowbtnXPos = incrementspace(firstRowbtnXPos, spacecalc);
+F3Button = CreateWindowA("Button","F3",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, firstRowbtnXPos,firstRowbtnYPos,btnW,btnH,hwnd,(HMENU)4,window.hInstance,NULL);
+    firstRowbtnXPos = incrementspace(firstRowbtnXPos, spacecalc);
+F4Button = CreateWindowA("Button","F4",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, firstRowbtnXPos,firstRowbtnYPos,btnW,btnH,hwnd,(HMENU)5,window.hInstance,NULL);
+    firstRowbtnXPos = incrementspace(firstRowbtnXPos, f1spacecalc);
+F5Button = CreateWindowA("Button","F5",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, firstRowbtnXPos,firstRowbtnYPos,btnW,btnH,hwnd,(HMENU)6,window.hInstance,NULL);
+    firstRowbtnXPos = incrementspace(firstRowbtnXPos, spacecalc);
+F6Button = CreateWindowA("Button","F6",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, firstRowbtnXPos,firstRowbtnYPos,btnW,btnH,hwnd,(HMENU)7,window.hInstance,NULL);
+    firstRowbtnXPos = incrementspace(firstRowbtnXPos, spacecalc);
+F7Button = CreateWindowA("Button","F7",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, firstRowbtnXPos,firstRowbtnYPos,btnW,btnH,hwnd,(HMENU)8,window.hInstance,NULL);
+    firstRowbtnXPos = incrementspace(firstRowbtnXPos, spacecalc);
+F8Button = CreateWindowA("Button","F8",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, firstRowbtnXPos,firstRowbtnYPos,btnW,btnH,hwnd,(HMENU)9,window.hInstance,NULL);
+    firstRowbtnXPos = incrementspace(firstRowbtnXPos, f1spacecalc);
+F9Button = CreateWindowA("Button","F9",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, firstRowbtnXPos,firstRowbtnYPos,btnW,btnH,hwnd,(HMENU)10,window.hInstance,NULL);
+    firstRowbtnXPos = incrementspace(firstRowbtnXPos, spacecalc);
+F10Button = CreateWindowA("Button","F10",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, firstRowbtnXPos,firstRowbtnYPos,btnW,btnH,hwnd,(HMENU)11,window.hInstance,NULL);
+    firstRowbtnXPos = incrementspace(firstRowbtnXPos, spacecalc);
+F11Button = CreateWindowA("Button","F11",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, firstRowbtnXPos,firstRowbtnYPos,btnW,btnH,hwnd,(HMENU)12,window.hInstance,NULL);
+    firstRowbtnXPos = incrementspace(firstRowbtnXPos, spacecalc);
+F12Button = CreateWindowA("Button","F12",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, firstRowbtnXPos,firstRowbtnYPos,btnW,btnH,hwnd,(HMENU)13,window.hInstance,NULL);
 buttonsVector.push_back(F1Button);
 buttonsVector.push_back(F2Button);
 buttonsVector.push_back(F3Button);
@@ -213,56 +299,61 @@ int secondRowbtnXPos, secondRowbtnYPos,secondrowspacecalc;
 secondRowbtnYPos = windowHeight * 0.18;
 secondRowbtnXPos = windowWidth * 0.02; 
 secondrowspacecalc = windowWidth * 0.05;
-HWND subscript2Button = CreateWindowW(L"Button",L"²",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, secondRowbtnXPos,secondRowbtnYPos,btnW,btnH,hwnd,(HMENU)14,window.hInstance,NULL);
-secondRowbtnXPos = incrementspace(secondRowbtnXPos, secondrowspacecalc); 
-HWND smalloButton = CreateWindowW(L"Button",L"°",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, secondRowbtnXPos,secondRowbtnYPos,btnW,btnH,hwnd,(HMENU)15,window.hInstance,NULL);
-secondRowbtnXPos = incrementspace(secondRowbtnXPos,secondrowspacecalc);
-HWND equalsButton = CreateWindowA("Button","=",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, secondRowbtnXPos,secondRowbtnYPos,btnW,btnH,hwnd,(HMENU)16,window.hInstance,NULL);
-secondRowbtnXPos = incrementspace(secondRowbtnXPos,secondrowspacecalc);
+subscript2Button = CreateWindowW(L"Button",L"²",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, secondRowbtnXPos,secondRowbtnYPos,btnW,btnH,hwnd,(HMENU)14,window.hInstance,NULL);
+    secondRowbtnXPos = incrementspace(secondRowbtnXPos, secondrowspacecalc); 
+smalloButton = CreateWindowW(L"Button",L"°",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, secondRowbtnXPos,secondRowbtnYPos,btnW,btnH,hwnd,(HMENU)15,window.hInstance,NULL);
+    secondRowbtnXPos = incrementspace(secondRowbtnXPos,secondrowspacecalc);
+equalsButton = CreateWindowA("Button","=",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, secondRowbtnXPos,secondRowbtnYPos,btnW,btnH,hwnd,(HMENU)16,window.hInstance,NULL);
+    secondRowbtnXPos = incrementspace(secondRowbtnXPos,secondrowspacecalc);
 buttonsVector.push_back(subscript2Button);
 buttonsVector.push_back(smalloButton);
 buttonsVector.push_back(equalsButton);
 int backspacebtnW;
 backspacebtnW = windowWidth * 0.15;
-HWND backspaceButton = CreateWindowA("Button","backspace",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, secondRowbtnXPos,secondRowbtnYPos,backspacebtnW,btnH,hwnd,(HMENU)17,window.hInstance,NULL);
-for(int i = 0;i<=2;i++){
-secondRowbtnXPos = incrementspace(secondRowbtnXPos,secondrowspacecalc);
-}
+vector<HWND>BSpaceVec;
+backspaceButton = CreateWindowA("Button","backspace",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, secondRowbtnXPos,secondRowbtnYPos,backspacebtnW,btnH,hwnd,(HMENU)17,window.hInstance,NULL);
+BSpaceVec.push_back(backspaceButton);
+    for(int i = 0;i<=2;i++){
+    secondRowbtnXPos = incrementspace(secondRowbtnXPos,secondrowspacecalc);
+    }
 int pgupanddown = windowWidth *0.1;
-HWND PageupButton = CreateWindowA("Button","PgUp",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, secondRowbtnXPos,secondRowbtnYPos,pgupanddown,btnH,hwnd,(HMENU)68,window.hInstance,NULL);
-for(int i = 0;i<2;i++){
-secondRowbtnXPos = incrementspace(secondRowbtnXPos,secondrowspacecalc);
-}
-HWND PageDownButton = CreateWindowA("Button","PgDown",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, secondRowbtnXPos,secondRowbtnYPos,pgupanddown,btnH,hwnd,(HMENU)69,window.hInstance,NULL);
+vector<HWND>pageVec;                         //
+PageupButton = CreateWindowA("Button","PgUp",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, secondRowbtnXPos,secondRowbtnYPos,pgupanddown,btnH,hwnd,(HMENU)68,window.hInstance,NULL);
+    for(int i = 0;i<2;i++){
+    secondRowbtnXPos = incrementspace(secondRowbtnXPos,secondrowspacecalc);
+    }
+PageDownButton = CreateWindowA("Button","PgDown",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, secondRowbtnXPos,secondRowbtnYPos,pgupanddown,btnH,hwnd,(HMENU)69,window.hInstance,NULL);
+pageVec.push_back(PageupButton);
+pageVec.push_back(PageDownButton);
 //third row
 int thirdrowXPos,thirdrowYPos;
 thirdrowYPos = windowHeight *0.3;
 thirdrowXPos = windowWidth * 0.02;
-HWND tabButton=CreateWindowA("Button","Tab",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, thirdrowXPos,thirdrowYPos,btnW,btnH,hwnd,(HMENU)18,window.hInstance,NULL);
-thirdrowXPos = incrementspace(thirdrowXPos,secondrowspacecalc);
-HWND poundButton = CreateWindowW(L"BUTTON",L"£",WS_CHILD| WS_VISIBLE | BS_PUSHBUTTON,thirdrowXPos,thirdrowYPos,btnW,btnH,hwnd,(HMENU)19,window.hInstance,NULL);
-thirdrowXPos = incrementspace(thirdrowXPos,secondrowspacecalc);
-HWND dollarButton = CreateWindowW(L"Button",L"$",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,thirdrowXPos,thirdrowYPos,btnW,btnH,hwnd,(HMENU)20,window.hInstance,NULL);
-thirdrowXPos = incrementspace(thirdrowXPos,secondrowspacecalc);
-HWND caretButton = CreateWindowW(L"Button",L"^",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,thirdrowXPos,thirdrowYPos,btnW,btnH,hwnd,(HMENU)21,window.hInstance,NULL);
-thirdrowXPos = incrementspace(thirdrowXPos,secondrowspacecalc);
-HWND ùButton = CreateWindowW(L"Button",L"ù",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,thirdrowXPos,thirdrowYPos,btnW,btnH,hwnd,(HMENU)22,window.hInstance,NULL);
-thirdrowXPos = incrementspace(thirdrowXPos,secondrowspacecalc); 
-HWND starButton = CreateWindowA("Button","*",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,thirdrowXPos,thirdrowYPos,btnW,btnH,hwnd,(HMENU)23,window.hInstance,NULL);
-thirdrowXPos = incrementspace(thirdrowXPos,secondrowspacecalc);
-HWND ampersandButton = CreateWindowA("Button","&&",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,thirdrowXPos,thirdrowYPos,btnW,btnH,hwnd,(HMENU)24,window.hInstance,NULL);
-thirdrowXPos = incrementspace(thirdrowXPos,secondrowspacecalc);
-HWND smallerthanButton = CreateWindowA("Button","<",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, thirdrowXPos,thirdrowYPos,btnW,btnH,hwnd,(HMENU)26,window.hInstance,NULL);
-thirdrowXPos = incrementspace(thirdrowXPos,secondrowspacecalc);
-HWND biggerthanButton = CreateWindowA("Button",">",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,thirdrowXPos,thirdrowYPos,btnW,btnH,hwnd,(HMENU)53,window.hInstance,NULL);
-thirdrowXPos = incrementspace(thirdrowXPos,secondrowspacecalc);
-HWND semicolonButton = CreateWindowA("Button",";",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, thirdrowXPos,thirdrowYPos,btnW,btnH,hwnd,(HMENU)28,window.hInstance,NULL);
-thirdrowXPos = incrementspace(thirdrowXPos,secondrowspacecalc);
-HWND colonButton = CreateWindowA("Button",":",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, thirdrowXPos,thirdrowYPos,btnW,btnH,hwnd,(HMENU)29,window.hInstance,NULL);
-thirdrowXPos = incrementspace(thirdrowXPos,secondrowspacecalc);
-HWND exclamationButton = CreateWindowW(L"Button",L"!",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, thirdrowXPos,thirdrowYPos,btnW,btnH,hwnd,(HMENU)30,window.hInstance,NULL);
-thirdrowXPos = incrementspace(thirdrowXPos,secondrowspacecalc);
-HWND accentButton = CreateWindowW(L"Button",L"é",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,thirdrowXPos,thirdrowYPos,btnW,btnH,hwnd,(HMENU)31,window.hInstance,NULL);
+tabButton=CreateWindowA("Button","Tab",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, thirdrowXPos,thirdrowYPos,btnW,btnH,hwnd,(HMENU)18,window.hInstance,NULL);
+    thirdrowXPos = incrementspace(thirdrowXPos,secondrowspacecalc);
+poundButton = CreateWindowW(L"BUTTON",L"£",WS_CHILD| WS_VISIBLE | BS_PUSHBUTTON,thirdrowXPos,thirdrowYPos,btnW,btnH,hwnd,(HMENU)19,window.hInstance,NULL);
+    thirdrowXPos = incrementspace(thirdrowXPos,secondrowspacecalc);
+dollarButton = CreateWindowW(L"Button",L"$",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,thirdrowXPos,thirdrowYPos,btnW,btnH,hwnd,(HMENU)20,window.hInstance,NULL);
+    thirdrowXPos = incrementspace(thirdrowXPos,secondrowspacecalc);
+caretButton = CreateWindowW(L"Button",L"^",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,thirdrowXPos,thirdrowYPos,btnW,btnH,hwnd,(HMENU)21,window.hInstance,NULL);
+    thirdrowXPos = incrementspace(thirdrowXPos,secondrowspacecalc);
+ùButton = CreateWindowW(L"Button",L"ù",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,thirdrowXPos,thirdrowYPos,btnW,btnH,hwnd,(HMENU)22,window.hInstance,NULL);
+    thirdrowXPos = incrementspace(thirdrowXPos,secondrowspacecalc); 
+starButton = CreateWindowA("Button","*",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,thirdrowXPos,thirdrowYPos,btnW,btnH,hwnd,(HMENU)23,window.hInstance,NULL);
+    thirdrowXPos = incrementspace(thirdrowXPos,secondrowspacecalc);
+ampersandButton = CreateWindowA("Button","&&",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,thirdrowXPos,thirdrowYPos,btnW,btnH,hwnd,(HMENU)24,window.hInstance,NULL);
+    thirdrowXPos = incrementspace(thirdrowXPos,secondrowspacecalc);
+smallerthanButton = CreateWindowA("Button","<",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, thirdrowXPos,thirdrowYPos,btnW,btnH,hwnd,(HMENU)26,window.hInstance,NULL);
+    thirdrowXPos = incrementspace(thirdrowXPos,secondrowspacecalc);
+biggerthanButton = CreateWindowA("Button",">",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,thirdrowXPos,thirdrowYPos,btnW,btnH,hwnd,(HMENU)53,window.hInstance,NULL);
+    thirdrowXPos = incrementspace(thirdrowXPos,secondrowspacecalc);
+semicolonButton = CreateWindowA("Button",";",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, thirdrowXPos,thirdrowYPos,btnW,btnH,hwnd,(HMENU)28,window.hInstance,NULL);
+    thirdrowXPos = incrementspace(thirdrowXPos,secondrowspacecalc);
+colonButton = CreateWindowA("Button",":",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, thirdrowXPos,thirdrowYPos,btnW,btnH,hwnd,(HMENU)29,window.hInstance,NULL);
+    thirdrowXPos = incrementspace(thirdrowXPos,secondrowspacecalc);
+exclamationButton = CreateWindowW(L"Button",L"!",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, thirdrowXPos,thirdrowYPos,btnW,btnH,hwnd,(HMENU)30,window.hInstance,NULL);
+    thirdrowXPos = incrementspace(thirdrowXPos,secondrowspacecalc);
+accentButton = CreateWindowW(L"Button",L"é",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,thirdrowXPos,thirdrowYPos,btnW,btnH,hwnd,(HMENU)31,window.hInstance,NULL);
 buttonsVector.push_back(tabButton);
 buttonsVector.push_back(poundButton);
 buttonsVector.push_back(dollarButton);
@@ -281,29 +372,32 @@ int fourthrowXPos,fourthrowYPos;
 fourthrowXPos = windowWidth *0.02;
 fourthrowYPos = windowHeight * 0.42;
 int LshiftW = windowWidth * 0.1;
-HWND LshiftButton = CreateWindowA("Button","LShift",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, fourthrowXPos,fourthrowYPos,LshiftW,btnH,hwnd,(HMENU)32,window.hInstance,NULL);//special
-for(int i = 0;i<=1;i++){
+vector<HWND>shiftVec;                       //
+LshiftButton = CreateWindowA("Button","LShift",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, fourthrowXPos,fourthrowYPos,LshiftW,btnH,hwnd,(HMENU)32,window.hInstance,NULL);//special
+    for(int i = 0;i<=1;i++){
     fourthrowXPos = incrementspace(fourthrowXPos,secondrowspacecalc);
-}
-HWND doubleQuoteButton = CreateWindowA("Button","\"",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,fourthrowXPos,fourthrowYPos,btnW,btnH,hwnd,(HMENU)33,window.hInstance,NULL);
-fourthrowXPos = incrementspace(fourthrowXPos,secondrowspacecalc);
-HWND singleQuoteButton = CreateWindowA("Button","\'",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,fourthrowXPos,fourthrowYPos,btnW,btnH,hwnd,(HMENU)34,window.hInstance,NULL);
-fourthrowXPos = incrementspace(fourthrowXPos,secondrowspacecalc);
-HWND openingParenthesisButton = CreateWindowA("Button","(",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,fourthrowXPos,fourthrowYPos,btnW,btnH,hwnd,(HMENU)35,window.hInstance,NULL);
-fourthrowXPos = incrementspace(fourthrowXPos,secondrowspacecalc);
-HWND closingParenthesisButton = CreateWindowA("Button",")",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,fourthrowXPos,fourthrowYPos,btnW,btnH,hwnd,(HMENU)41,window.hInstance,NULL);
-fourthrowXPos = incrementspace(fourthrowXPos,secondrowspacecalc);
-HWND otheraccentButton = CreateWindowW(L"Button",L"è",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,fourthrowXPos,fourthrowYPos,btnW,btnH,hwnd,(HMENU)37,window.hInstance,NULL);
-fourthrowXPos = incrementspace(fourthrowXPos,secondrowspacecalc);
-HWND underScoreButton = CreateWindowA("Button","_",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,fourthrowXPos,fourthrowYPos,btnW,btnH,hwnd,(HMENU)38,window.hInstance,NULL);
-fourthrowXPos = incrementspace(fourthrowXPos,secondrowspacecalc);
-HWND çButton = CreateWindowW(L"Button",L"ç",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,fourthrowXPos,fourthrowYPos,btnW,btnH,hwnd,(HMENU)39,window.hInstance,NULL);
-fourthrowXPos = incrementspace(fourthrowXPos,secondrowspacecalc);
-HWND àButton = CreateWindowW(L"Button",L"à",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,fourthrowXPos,fourthrowYPos,btnW,btnH,hwnd,(HMENU)40,window.hInstance,NULL);
-fourthrowXPos = incrementspace(fourthrowXPos,secondrowspacecalc);
-HWND hyphonButton = CreateWindowA("Button","-",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,fourthrowXPos,fourthrowYPos,btnW,btnH,hwnd,(HMENU)36,window.hInstance,NULL);
-fourthrowXPos = incrementspace(fourthrowXPos,secondrowspacecalc);
-HWND RshiftButton = CreateWindowA("Button","RShift",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,fourthrowXPos,fourthrowYPos,LshiftW,btnH,hwnd,(HMENU)25,window.hInstance,NULL);//special
+    }
+doubleQuoteButton = CreateWindowA("Button","\"",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,fourthrowXPos,fourthrowYPos,btnW,btnH,hwnd,(HMENU)33,window.hInstance,NULL);
+    fourthrowXPos = incrementspace(fourthrowXPos,secondrowspacecalc);
+singleQuoteButton = CreateWindowA("Button","\'",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,fourthrowXPos,fourthrowYPos,btnW,btnH,hwnd,(HMENU)34,window.hInstance,NULL);
+    fourthrowXPos = incrementspace(fourthrowXPos,secondrowspacecalc);
+openingParenthesisButton = CreateWindowA("Button","(",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,fourthrowXPos,fourthrowYPos,btnW,btnH,hwnd,(HMENU)35,window.hInstance,NULL);
+    fourthrowXPos = incrementspace(fourthrowXPos,secondrowspacecalc);
+closingParenthesisButton = CreateWindowA("Button",")",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,fourthrowXPos,fourthrowYPos,btnW,btnH,hwnd,(HMENU)41,window.hInstance,NULL);
+    fourthrowXPos = incrementspace(fourthrowXPos,secondrowspacecalc);
+otheraccentButton = CreateWindowW(L"Button",L"è",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,fourthrowXPos,fourthrowYPos,btnW,btnH,hwnd,(HMENU)37,window.hInstance,NULL);
+    fourthrowXPos = incrementspace(fourthrowXPos,secondrowspacecalc);
+underScoreButton = CreateWindowA("Button","_",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,fourthrowXPos,fourthrowYPos,btnW,btnH,hwnd,(HMENU)38,window.hInstance,NULL);
+    fourthrowXPos = incrementspace(fourthrowXPos,secondrowspacecalc);
+çButton = CreateWindowW(L"Button",L"ç",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,fourthrowXPos,fourthrowYPos,btnW,btnH,hwnd,(HMENU)39,window.hInstance,NULL);
+    fourthrowXPos = incrementspace(fourthrowXPos,secondrowspacecalc);
+àButton = CreateWindowW(L"Button",L"à",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,fourthrowXPos,fourthrowYPos,btnW,btnH,hwnd,(HMENU)40,window.hInstance,NULL);
+    fourthrowXPos = incrementspace(fourthrowXPos,secondrowspacecalc);
+hyphonButton = CreateWindowA("Button","-",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,fourthrowXPos,fourthrowYPos,btnW,btnH,hwnd,(HMENU)36,window.hInstance,NULL);
+    fourthrowXPos = incrementspace(fourthrowXPos,secondrowspacecalc);
+RshiftButton = CreateWindowA("Button","RShift",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,fourthrowXPos,fourthrowYPos,LshiftW,btnH,hwnd,(HMENU)25,window.hInstance,NULL);//special
+shiftVec.push_back(LshiftButton);
+shiftVec.push_back(RshiftButton);
 buttonsVector.push_back(doubleQuoteButton);
 buttonsVector.push_back(singleQuoteButton);
 buttonsVector.push_back(openingParenthesisButton);
@@ -317,32 +411,32 @@ buttonsVector.push_back(hyphonButton);
 int fifthrowXPos,fifthrowYPos;
 fifthrowXPos = windowWidth *0.02;
 fifthrowYPos = windowHeight *0.54;
-HWND plusButton = CreateWindowA("Button","+",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,fifthrowXPos,fifthrowYPos,btnW,btnH,hwnd,(HMENU)42,window.hInstance,NULL);
-fifthrowXPos = incrementspace(fifthrowXPos,secondrowspacecalc);
-HWND tildeButton = CreateWindowA("Button","~",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,fifthrowXPos,fifthrowYPos,btnW,btnH,hwnd,(HMENU)43,window.hInstance,NULL);
-fifthrowXPos = incrementspace(fifthrowXPos,secondrowspacecalc);
-HWND hashTagButton = CreateWindowA("Button","#",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,fifthrowXPos,fifthrowYPos,btnW,btnH,hwnd,(HMENU)44,window.hInstance,NULL);
-fifthrowXPos = incrementspace(fifthrowXPos,secondrowspacecalc);
-HWND openingbracesButton = CreateWindowA("Button","{",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,fifthrowXPos,fifthrowYPos,btnW,btnH,hwnd,(HMENU)45,window.hInstance,NULL);
-fifthrowXPos = incrementspace(fifthrowXPos,secondrowspacecalc);
-HWND closingBraceButton = CreateWindowA("Button","}",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,fifthrowXPos,fifthrowYPos,btnW,btnH,hwnd,(HMENU)51,window.hInstance,NULL);
-fifthrowXPos = incrementspace(fifthrowXPos,secondrowspacecalc);
-HWND orButton = CreateWindowA("Button","|",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,fifthrowXPos,fifthrowYPos,btnW,btnH,hwnd,(HMENU)47,window.hInstance,NULL);
-fifthrowXPos = incrementspace(fifthrowXPos,secondrowspacecalc);
-HWND backTickButton = CreateWindowA("Button","`",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,fifthrowXPos,fifthrowYPos,btnW,btnH,hwnd,(HMENU)48,window.hInstance,NULL);
-fifthrowXPos = incrementspace(fifthrowXPos,secondrowspacecalc);
-HWND backSlashButton = CreateWindowA("Button","\\",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,fifthrowXPos,fifthrowYPos,btnW,btnH,hwnd,(HMENU)49,window.hInstance,NULL);
-fifthrowXPos = incrementspace(fifthrowXPos,secondrowspacecalc);
-HWND forwardSlashButton = CreateWindowA("Button","/",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,fifthrowXPos,fifthrowYPos,btnW,btnH,hwnd,(HMENU)50,window.hInstance,NULL);
-fifthrowXPos = incrementspace(fifthrowXPos,secondrowspacecalc);
-HWND openingbracketButton = CreateWindowA("Button","[",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,fifthrowXPos,fifthrowYPos,btnW,btnH,hwnd,(HMENU)46,window.hInstance,NULL);
-fifthrowXPos = incrementspace(fifthrowXPos,secondrowspacecalc);
-HWND closingBracketButton = CreateWindowA("Button","]",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,fifthrowXPos,fifthrowYPos,btnW,btnH,hwnd,(HMENU)52,window.hInstance,NULL);
-fifthrowXPos = incrementspace(fifthrowXPos,secondrowspacecalc);
-HWND commaButton = CreateWindowA("Button",",",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, fifthrowXPos,fifthrowYPos,btnW,btnH,hwnd,(HMENU)27,window.hInstance,NULL);
-fifthrowXPos = incrementspace(fifthrowXPos,secondrowspacecalc);
-HWND atButton = CreateWindowA("Button","@",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,fifthrowXPos,fifthrowYPos,btnW,btnH,hwnd,(HMENU)54,window.hInstance,NULL);
-fifthrowXPos = incrementspace(fifthrowXPos,secondrowspacecalc);
+plusButton = CreateWindowA("Button","+",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,fifthrowXPos,fifthrowYPos,btnW,btnH,hwnd,(HMENU)42,window.hInstance,NULL);
+    fifthrowXPos = incrementspace(fifthrowXPos,secondrowspacecalc);
+tildeButton = CreateWindowA("Button","~",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,fifthrowXPos,fifthrowYPos,btnW,btnH,hwnd,(HMENU)43,window.hInstance,NULL);
+    fifthrowXPos = incrementspace(fifthrowXPos,secondrowspacecalc);
+hashTagButton = CreateWindowA("Button","#",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,fifthrowXPos,fifthrowYPos,btnW,btnH,hwnd,(HMENU)44,window.hInstance,NULL);
+    fifthrowXPos = incrementspace(fifthrowXPos,secondrowspacecalc);
+openingbracesButton = CreateWindowA("Button","{",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,fifthrowXPos,fifthrowYPos,btnW,btnH,hwnd,(HMENU)45,window.hInstance,NULL);
+    fifthrowXPos = incrementspace(fifthrowXPos,secondrowspacecalc);
+closingBraceButton = CreateWindowA("Button","}",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,fifthrowXPos,fifthrowYPos,btnW,btnH,hwnd,(HMENU)51,window.hInstance,NULL);
+    fifthrowXPos = incrementspace(fifthrowXPos,secondrowspacecalc);
+orButton = CreateWindowA("Button","|",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,fifthrowXPos,fifthrowYPos,btnW,btnH,hwnd,(HMENU)47,window.hInstance,NULL);
+    fifthrowXPos = incrementspace(fifthrowXPos,secondrowspacecalc);
+backTickButton = CreateWindowA("Button","`",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,fifthrowXPos,fifthrowYPos,btnW,btnH,hwnd,(HMENU)48,window.hInstance,NULL);
+    fifthrowXPos = incrementspace(fifthrowXPos,secondrowspacecalc);
+backSlashButton = CreateWindowA("Button","\\",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,fifthrowXPos,fifthrowYPos,btnW,btnH,hwnd,(HMENU)49,window.hInstance,NULL);
+    fifthrowXPos = incrementspace(fifthrowXPos,secondrowspacecalc);
+forwardSlashButton = CreateWindowA("Button","/",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,fifthrowXPos,fifthrowYPos,btnW,btnH,hwnd,(HMENU)50,window.hInstance,NULL);
+    fifthrowXPos = incrementspace(fifthrowXPos,secondrowspacecalc);
+openingbracketButton = CreateWindowA("Button","[",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,fifthrowXPos,fifthrowYPos,btnW,btnH,hwnd,(HMENU)46,window.hInstance,NULL);
+    fifthrowXPos = incrementspace(fifthrowXPos,secondrowspacecalc);
+closingBracketButton = CreateWindowA("Button","]",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,fifthrowXPos,fifthrowYPos,btnW,btnH,hwnd,(HMENU)52,window.hInstance,NULL);
+    fifthrowXPos = incrementspace(fifthrowXPos,secondrowspacecalc);
+commaButton = CreateWindowA("Button",",",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, fifthrowXPos,fifthrowYPos,btnW,btnH,hwnd,(HMENU)27,window.hInstance,NULL);
+    fifthrowXPos = incrementspace(fifthrowXPos,secondrowspacecalc);
+atButton = CreateWindowA("Button","@",WS_CHILD |WS_VISIBLE |BS_PUSHBUTTON,fifthrowXPos,fifthrowYPos,btnW,btnH,hwnd,(HMENU)54,window.hInstance,NULL);
+    fifthrowXPos = incrementspace(fifthrowXPos,secondrowspacecalc);
 buttonsVector.push_back(plusButton);
 buttonsVector.push_back(tildeButton);
 buttonsVector.push_back(hashTagButton);
@@ -362,38 +456,42 @@ sixthrowXPos = windowWidth * 0.02;
 sixthrowYPos = windowHeight * 0.66;
 int ctrlbtnW = windowWidth *0.05;
 int ctrlspace = windowWidth *0.1;
-HWND CtrlButton = CreateWindowA("Button","Ctrl",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, sixthrowXPos,sixthrowYPos,ctrlbtnW,btnH,hwnd,(HMENU)55,window.hInstance,NULL);
-sixthrowXPos = incrementspace(sixthrowXPos,secondrowspacecalc);
-HWND WindowsButton = CreateWindowA("Button","Win",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,sixthrowXPos,sixthrowYPos,btnW,btnH,hwnd,(HMENU)56,window.hInstance,NULL);
+vector<HWND>ctrlVec;                    //
+CtrlButton = CreateWindowA("Button","Ctrl",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, sixthrowXPos,sixthrowYPos,ctrlbtnW,btnH,hwnd,(HMENU)55,window.hInstance,NULL);
+    sixthrowXPos = incrementspace(sixthrowXPos,secondrowspacecalc);
+WindowsButton = CreateWindowA("Button","Win",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,sixthrowXPos,sixthrowYPos,btnW,btnH,hwnd,(HMENU)56,window.hInstance,NULL);
 buttonsVector.push_back(WindowsButton);
-sixthrowXPos = incrementspace(sixthrowXPos,secondrowspacecalc);
-HWND AltButton = CreateWindowA("Button","Alt",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, sixthrowXPos,sixthrowYPos,btnW,btnH,hwnd,(HMENU)57,window.hInstance,NULL);
+    sixthrowXPos = incrementspace(sixthrowXPos,secondrowspacecalc);
+AltButton = CreateWindowA("Button","Alt",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, sixthrowXPos,sixthrowYPos,btnW,btnH,hwnd,(HMENU)57,window.hInstance,NULL);
 buttonsVector.push_back(AltButton);
 int spacebtnW = windowWidth * 0.25;
-HWND SpaceButton = CreateWindowA("Button","Space",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,sixthrowXPos,sixthrowYPos,spacebtnW,btnH,hwnd,(HMENU)58,window.hInstance,NULL);
-sixthrowXPos = incrementspace(sixthrowXPos,spacebtnW);
-HWND RightAltButton = CreateWindowA("Button","RAlt",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, sixthrowXPos,sixthrowYPos,btnW,btnH,hwnd,(HMENU)59,window.hInstance,NULL);
+vector<HWND>spaceVec;           //
+SpaceButton = CreateWindowA("Button","Space",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,sixthrowXPos,sixthrowYPos,spacebtnW,btnH,hwnd,(HMENU)58,window.hInstance,NULL);
+spaceVec.push_back(SpaceButton);
+    sixthrowXPos = incrementspace(sixthrowXPos,spacebtnW);
+RightAltButton = CreateWindowA("Button","RAlt",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, sixthrowXPos,sixthrowYPos,btnW,btnH,hwnd,(HMENU)59,window.hInstance,NULL);
 buttonsVector.push_back(RightAltButton);
-sixthrowXPos = incrementspace(sixthrowXPos,secondrowspacecalc);
-HWND Windows2Button = CreateWindowA("Button","Win",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,sixthrowXPos,sixthrowYPos,btnW,btnH,hwnd,(HMENU)60,window.hInstance,NULL);
-buttonsVector.push_back(Windows2Button);
-sixthrowXPos = incrementspace(sixthrowXPos,secondrowspacecalc);
-HWND RCtrlButton = CreateWindowA("Button","RCtrl",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, sixthrowXPos,sixthrowYPos,ctrlbtnW,btnH,hwnd,(HMENU)61,window.hInstance,NULL);
-sixthrowXPos = incrementspace(sixthrowXPos,secondrowspacecalc);
-HWND DeleteButton = CreateWindowA("Button","Del",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, sixthrowXPos,sixthrowYPos,btnW,btnH,hwnd,(HMENU)67,window.hInstance,NULL);
-buttonsVector.push_back(DeleteButton);
-//page up & down btns could go next to backspace, add delete to sixth row
-//arrows keys
-for(int i = 0;i<3;i++){
     sixthrowXPos = incrementspace(sixthrowXPos,secondrowspacecalc);
-}
-HWND leftButton = CreateWindowW(L"Button",L"←",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, sixthrowXPos,sixthrowYPos,btnW,btnH,hwnd,(HMENU)63,window.hInstance,NULL);
-sixthrowXPos = incrementspace(sixthrowXPos,secondrowspacecalc);
-HWND downButton = CreateWindowW(L"Button",L"↓",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, sixthrowXPos,sixthrowYPos,btnW,btnH,hwnd,(HMENU)64,window.hInstance,NULL);
-fifthrowXPos = incrementspace(fifthrowXPos,secondrowspacecalc);
-HWND upButton = CreateWindowW(L"Button",L"↑",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,sixthrowXPos,fifthrowYPos,btnW,btnH,hwnd,(HMENU)62,window.hInstance,NULL);
-sixthrowXPos = incrementspace(sixthrowXPos,secondrowspacecalc);
-HWND rightButton = CreateWindowW(L"Button",L"→",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, sixthrowXPos,sixthrowYPos,btnW,btnH,hwnd,(HMENU)65,window.hInstance,NULL);
+Windows2Button = CreateWindowA("Button","Win",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,sixthrowXPos,sixthrowYPos,btnW,btnH,hwnd,(HMENU)60,window.hInstance,NULL);
+buttonsVector.push_back(Windows2Button);
+    sixthrowXPos = incrementspace(sixthrowXPos,secondrowspacecalc);
+RCtrlButton = CreateWindowA("Button","RCtrl",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, sixthrowXPos,sixthrowYPos,ctrlbtnW,btnH,hwnd,(HMENU)61,window.hInstance,NULL);
+ctrlVec.push_back(CtrlButton);
+ctrlVec.push_back(RCtrlButton);
+    sixthrowXPos = incrementspace(sixthrowXPos,secondrowspacecalc);
+DeleteButton = CreateWindowA("Button","Del",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, sixthrowXPos,sixthrowYPos,btnW,btnH,hwnd,(HMENU)67,window.hInstance,NULL);
+buttonsVector.push_back(DeleteButton);
+//arrows keys
+    for(int i = 0;i<3;i++){
+    sixthrowXPos = incrementspace(sixthrowXPos,secondrowspacecalc);
+    }
+leftButton = CreateWindowW(L"Button",L"←",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, sixthrowXPos,sixthrowYPos,btnW,btnH,hwnd,(HMENU)63,window.hInstance,NULL);
+    sixthrowXPos = incrementspace(sixthrowXPos,secondrowspacecalc);
+downButton = CreateWindowW(L"Button",L"↓",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, sixthrowXPos,sixthrowYPos,btnW,btnH,hwnd,(HMENU)64,window.hInstance,NULL);
+    fifthrowXPos = incrementspace(fifthrowXPos,secondrowspacecalc);
+upButton = CreateWindowW(L"Button",L"↑",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,sixthrowXPos,fifthrowYPos,btnW,btnH,hwnd,(HMENU)62,window.hInstance,NULL);
+    sixthrowXPos = incrementspace(sixthrowXPos,secondrowspacecalc);
+rightButton = CreateWindowW(L"Button",L"→",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, sixthrowXPos,sixthrowYPos,btnW,btnH,hwnd,(HMENU)65,window.hInstance,NULL);
 buttonsVector.push_back(leftButton);
 buttonsVector.push_back(downButton);
 buttonsVector.push_back(upButton);
@@ -403,9 +501,9 @@ int returnkeyW,returnkeyH;
 returnkeyW = windowWidth * 0.1;
 returnkeyH = windowHeight *0.23;
 thirdrowXPos = incrementspace(thirdrowXPos,secondrowspacecalc);
-HWND EnterButton = CreateWindowA("Button","Enter",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, thirdrowXPos,thirdrowYPos,returnkeyW,returnkeyH,hwnd,(HMENU)66,window.hInstance,NULL);
-/*HWND PageupButton = CreateWindowA("Button","PgUp",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 560,85,60,30,hwnd,(HMENU)68,window.hInstance,NULL);
-HWND PageDownButton = CreateWindowA("Button","PgDown",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 560,120,60,30,hwnd,(HMENU)69,window.hInstance,NULL);*/
+vector<HWND>EnterbtnVec;                 //
+EnterButton = CreateWindowA("Button","Enter",WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, thirdrowXPos,thirdrowYPos,returnkeyW,returnkeyH,hwnd,(HMENU)66,window.hInstance,NULL);
+EnterbtnVec.push_back(EnterButton);
 MSG msg;
 ShowWindow(hwnd,SW_SHOW);
 UpdateWindow(hwnd);
