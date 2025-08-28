@@ -223,19 +223,6 @@ LRESULT CALLBACK WndProc(HWND hWnd,UINT message, WPARAM wParam, LPARAM lParam){
         break;
         case WM_SIZE://resize buttons when window gets resized
         {
-            /*int screenWidth = GetSystemMetrics(SM_CXSCREEN);
-int screenHeight = GetSystemMetrics(SM_CYSCREEN);
-int windowWidth = screenWidth * 0.34;
-int windowHeight = screenHeight * 0.25;
-int x = (screenWidth - windowWidth) / 2;
-int y = (screenHeight - windowHeight) / 2;
-int btnxPos, btnyPos;
-int btnW = windowWidth * 0.05;
-int btnH = windowHeight * 0.11; 
-int firstRowbtnXPos = windowWidth * 0.02;
-int firstRowbtnYPos = windowHeight *0.06;
-int spacecalc = windowWidth * 0.05;
-int f1spacecalc = windowWidth * 0.10;*/
             int newwindowWidth = LOWORD(lParam);
             int newwindowHeight = HIWORD(lParam);
             int newnormalbtnW = newwindowWidth *0.05;
@@ -243,19 +230,40 @@ int f1spacecalc = windowWidth * 0.10;*/
             int newfirstrowXPos = newwindowWidth * 0.02;
             int newfirstrowYPos = newwindowHeight *0.06;
             //get x & ys for all rows
-            /*
-            secondRowbtnYPos = windowHeight * 0.18;
-            secondRowbtnXPos = windowWidth * 0.02; 
-            thirdrowYPos = windowHeight *0.3;
-            thirdrowXPos = windowWidth * 0.02;
-            fourthrowXPos = windowWidth *0.02;
-            fourthrowYPos = windowHeight * 0.42;
-            fifthrowXPos = windowWidth *0.02;
-            fifthrowYPos = windowHeight *0.54;
-            sixthrowXPos = windowWidth * 0.02;
-            sixthrowYPos = windowHeight * 0.66;
-            put each row into its own vector
-            */
+            int newsecondRowbtnYPos = windowHeight * 0.18;
+            int newsecondRowbtnXPos = windowWidth * 0.02; 
+            int newthirdrowYPos = windowHeight *0.3;
+            int newthirdrowXPos = windowWidth * 0.02;
+            int newfourthrowXPos = windowWidth *0.02;
+            int newfourthrowYPos = windowHeight * 0.42;
+            int newfifthrowXPos = windowWidth *0.02;
+            int newfifthrowYPos = windowHeight *0.54;
+            int newsixthrowXPos = windowWidth * 0.02;
+            int newsixthrowYPos = windowHeight * 0.66;
+            for(auto el: row1normalBtns){
+                MoveWindow(el,newfirstrowXPos,newfirstrowYPos,newnormalbtnW,newnormalbtnH,TRUE);
+                newfirstrowXPos= incrementspace(newfirstrowXPos,spacecalc);
+            }
+            for(auto el: row2normalBtns){
+                MoveWindow(el,newsecondRowbtnXPos,newsecondRowbtnYPos,newnormalbtnW,newnormalbtnW,TRUE);
+                newsecondRowbtnXPos= incrementspace(newsecondRowbtnXPos,spacecalc);
+            }
+            for(auto el: row3normalBtns){
+                MoveWindow(el,newthirdrowXPos,newthirdrowYPos,newnormalbtnW,newnormalbtnW,TRUE);
+                newthirdrowXPos= incrementspace(newthirdrowXPos,spacecalc);
+            }
+            for(auto el: row4normalBtns){
+                MoveWindow(el,newfourthrowXPos,newfourthrowYPos,newnormalbtnW,newnormalbtnW,TRUE);
+                newfourthrowXPos= incrementspace(newfourthrowXPos,spacecalc);
+            }
+            for(auto el: row5normalBtns){
+                MoveWindow(el,newfifthrowXPos,newfifthrowYPos,newnormalbtnW,newnormalbtnH,TRUE);
+                newfifthrowXPos= incrementspace(newfifthrowXPos,spacecalc);
+            }
+            for(auto el:row6normalBtns){
+                MoveWindow(el,newsixthrowXPos,newsixthrowYPos,newnormalbtnW,newnormalbtnH,TRUE);
+                newsixthrowXPos= incrementspace(newsixthrowXPos,spacecalc);
+            }
         }
         default:
         return DefWindowProc(hWnd,message,wParam,lParam);
@@ -282,7 +290,7 @@ HWND hwnd = CreateWindowEx(
     TEXT("mainWindow"),
     TEXT(
     "Specials Keyboard"),
-    WS_OVERLAPPEDWINDOW & ~WS_MAXIMIZEBOX & ~WS_SIZEBOX| WS_MINIMIZEBOX,//disabled maximize & minimize buttons 
+    WS_OVERLAPPEDWINDOW & ~WS_MAXIMIZEBOX| WS_MINIMIZEBOX,//disabled maximize & minimize buttons 
     x,y,windowWidth,windowHeight,
     NULL,NULL,
     window.hInstance,
