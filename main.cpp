@@ -139,6 +139,8 @@ HWND rightButton;
 vector<HWND>EnterbtnVec;    
 //return             
 HWND EnterButton;
+HWND hwnd;
+WNDCLASS window= {};
 LRESULT CALLBACK WndProc(HWND hWnd,UINT message, WPARAM wParam, LPARAM lParam){
     switch(message){
         case WM_COMMAND://checks for a button click
@@ -227,9 +229,9 @@ LRESULT CALLBACK WndProc(HWND hWnd,UINT message, WPARAM wParam, LPARAM lParam){
             int newwindowHeight = HIWORD(lParam);
             int newnormalbtnW = newwindowWidth *0.05;
             int newnormalbtnH = newwindowHeight *0.11;
+            //get x & ys for all rows
             int newfirstrowXPos = newwindowWidth * 0.02;
             int newfirstrowYPos = newwindowHeight *0.06;
-            //get x & ys for all rows
             int newsecondRowbtnYPos = windowHeight * 0.18;
             int newsecondRowbtnXPos = windowWidth * 0.02; 
             int newthirdrowYPos = windowHeight *0.3;
@@ -240,30 +242,52 @@ LRESULT CALLBACK WndProc(HWND hWnd,UINT message, WPARAM wParam, LPARAM lParam){
             int newfifthrowYPos = windowHeight *0.54;
             int newsixthrowXPos = windowWidth * 0.02;
             int newsixthrowYPos = windowHeight * 0.66;
-            for(auto el: row1normalBtns){
-                MoveWindow(el,newfirstrowXPos,newfirstrowYPos,newnormalbtnW,newnormalbtnH,TRUE);
-                newfirstrowXPos= incrementspace(newfirstrowXPos,spacecalc);
-            }
-            for(auto el: row2normalBtns){
-                MoveWindow(el,newsecondRowbtnXPos,newsecondRowbtnYPos,newnormalbtnW,newnormalbtnW,TRUE);
-                newsecondRowbtnXPos= incrementspace(newsecondRowbtnXPos,spacecalc);
-            }
-            for(auto el: row3normalBtns){
-                MoveWindow(el,newthirdrowXPos,newthirdrowYPos,newnormalbtnW,newnormalbtnW,TRUE);
-                newthirdrowXPos= incrementspace(newthirdrowXPos,spacecalc);
-            }
-            for(auto el: row4normalBtns){
-                MoveWindow(el,newfourthrowXPos,newfourthrowYPos,newnormalbtnW,newnormalbtnW,TRUE);
-                newfourthrowXPos= incrementspace(newfourthrowXPos,spacecalc);
-            }
-            for(auto el: row5normalBtns){
-                MoveWindow(el,newfifthrowXPos,newfifthrowYPos,newnormalbtnW,newnormalbtnH,TRUE);
-                newfifthrowXPos= incrementspace(newfifthrowXPos,spacecalc);
-            }
-            for(auto el:row6normalBtns){
-                MoveWindow(el,newsixthrowXPos,newsixthrowYPos,newnormalbtnW,newnormalbtnH,TRUE);
-                newsixthrowXPos= incrementspace(newsixthrowXPos,spacecalc);
-            }
+            //first row
+            SetWindowPos(escButton,NULL,newfirstrowXPos,newfirstrowYPos,newnormalbtnW,newnormalbtnH,SWP_NOZORDER | SWP_NOACTIVATE);
+            newfirstrowXPos = newfirstrowXPos + f1spacecalc;
+            SetWindowPos(F1Button,NULL,newfirstrowXPos,newfirstrowYPos,newnormalbtnW,newnormalbtnH,SWP_NOZORDER | SWP_NOACTIVATE);
+            newfirstrowXPos = incrementspace(newfirstrowXPos, spacecalc);
+            SetWindowPos(F2Button,NULL,newfirstrowXPos,newfirstrowYPos,newnormalbtnW,newnormalbtnH,SWP_NOZORDER | SWP_NOACTIVATE);
+            newfirstrowXPos = incrementspace(newfirstrowXPos, spacecalc);
+            SetWindowPos(F3Button,NULL,newfirstrowXPos,newfirstrowYPos,newnormalbtnW,newnormalbtnH,SWP_NOZORDER | SWP_NOACTIVATE);
+            newfirstrowXPos = incrementspace(newfirstrowXPos, spacecalc);
+            SetWindowPos(F4Button,NULL,newfirstrowXPos,newfirstrowYPos,newnormalbtnW,newnormalbtnH,SWP_NOZORDER | SWP_NOACTIVATE);
+            newfirstrowXPos = incrementspace(newfirstrowXPos, f1spacecalc);
+            SetWindowPos(F5Button,NULL,newfirstrowXPos,newfirstrowYPos,newnormalbtnW,newnormalbtnH,SWP_NOZORDER | SWP_NOACTIVATE);
+            newfirstrowXPos = incrementspace(newfirstrowXPos, spacecalc);
+            SetWindowPos(F6Button,NULL,newfirstrowXPos,newfirstrowYPos,newnormalbtnW,newnormalbtnH,SWP_NOZORDER | SWP_NOACTIVATE);
+            newfirstrowXPos = incrementspace(newfirstrowXPos, spacecalc);
+            SetWindowPos(F7Button,NULL,newfirstrowXPos,newfirstrowYPos,newnormalbtnW,newnormalbtnH,SWP_NOZORDER | SWP_NOACTIVATE);
+            newfirstrowXPos = incrementspace(newfirstrowXPos, spacecalc);
+            SetWindowPos(F8Button,NULL,newfirstrowXPos,newfirstrowYPos,newnormalbtnW,newnormalbtnH,SWP_NOZORDER | SWP_NOACTIVATE);
+            newfirstrowXPos = incrementspace(newfirstrowXPos, f1spacecalc);
+            SetWindowPos(F9Button,NULL,newfirstrowXPos,newfirstrowYPos,newnormalbtnW,newnormalbtnH,SWP_NOZORDER | SWP_NOACTIVATE);
+            newfirstrowXPos = incrementspace(newfirstrowXPos, spacecalc);
+            SetWindowPos(F10Button,NULL,newfirstrowXPos,newfirstrowYPos,newnormalbtnW,newnormalbtnH,SWP_NOZORDER | SWP_NOACTIVATE);
+            newfirstrowXPos = incrementspace(newfirstrowXPos, spacecalc);
+            SetWindowPos(F11Button,NULL,newfirstrowXPos,newfirstrowYPos,newnormalbtnW,newnormalbtnH,SWP_NOZORDER | SWP_NOACTIVATE);
+            newfirstrowXPos = incrementspace(newfirstrowXPos, spacecalc);
+            SetWindowPos(F12Button,NULL,newfirstrowXPos,newfirstrowYPos,newnormalbtnW,newnormalbtnH,SWP_NOZORDER | SWP_NOACTIVATE);
+            //second row
+            SetWindowPos(subscript2Button,NULL,newsecondRowbtnXPos,newsecondRowbtnYPos,newnormalbtnW,newnormalbtnH,SWP_NOZORDER|SWP_NOACTIVATE);
+            newsecondRowbtnXPos = incrementspace(newsecondRowbtnXPos, spacecalc); 
+            SetWindowPos(smalloButton,NULL,newsecondRowbtnXPos,newsecondRowbtnYPos,newnormalbtnW,newnormalbtnH,SWP_NOZORDER|SWP_NOACTIVATE);
+            newsecondRowbtnXPos = incrementspace(newsecondRowbtnXPos,spacecalc);
+            SetWindowPos(equalsButton,NULL,newsecondRowbtnXPos,newsecondRowbtnYPos,newnormalbtnW,newnormalbtnH,SWP_NOZORDER|SWP_NOACTIVATE);
+            newsecondRowbtnXPos = incrementspace(newsecondRowbtnXPos,spacecalc);
+            int backspacebtnW;
+            backspacebtnW = windowWidth * 0.15;
+            SetWindowPos(backspaceButton,NULL,newsecondRowbtnXPos,newsecondRowbtnYPos,backspacebtnW,newnormalbtnH,SWP_NOZORDER|SWP_NOACTIVATE);
+                for(int i = 0;i<=2;i++){
+                    newsecondRowbtnXPos = incrementspace(newsecondRowbtnXPos,spacecalc);
+                }
+            int pgupanddown = windowWidth *0.1;
+            SetWindowPos(PageupButton,NULL,newsecondRowbtnXPos,newsecondRowbtnYPos,pgupanddown,newnormalbtnH,SWP_NOZORDER|SWP_NOACTIVATE);
+                for(int i = 0;i<2;i++){
+                    newsecondRowbtnXPos = incrementspace(newsecondRowbtnXPos,spacecalc);
+                }
+            SetWindowPos(PageDownButton,NULL,newsecondRowbtnXPos,newsecondRowbtnYPos,pgupanddown,newnormalbtnH,SWP_NOZORDER|SWP_NOACTIVATE);
+            //buttons arent actually moving???
         }
         default:
         return DefWindowProc(hWnd,message,wParam,lParam);
@@ -272,7 +296,6 @@ LRESULT CALLBACK WndProc(HWND hWnd,UINT message, WPARAM wParam, LPARAM lParam){
 
 }
 int main(){
-    WNDCLASS window= {};
 window.style = CS_DBLCLKS | CS_PARENTDC;
 window.lpfnWndProc = WndProc;
 window.cbClsExtra = 0;
@@ -285,7 +308,7 @@ window.lpszMenuName= NULL;
 window.lpszClassName = TEXT("MainWindow");
 window.hbrBackground = (HBRUSH)(COLOR_WINDOW +1);
 RegisterClass(&window);
-HWND hwnd = CreateWindowEx(
+hwnd = CreateWindowEx(
     WS_EX_TOPMOST | WS_EX_APPWINDOW,
     TEXT("mainWindow"),
     TEXT(
